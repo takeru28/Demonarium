@@ -3,108 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codex Obscura — Archives Démoniaques</title>
+<title>Codex Obscura — Archives des Pourfendeurs</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #08080e;
-    --bg2:       #0c0c16;
-    --bg3:       #10101e;
-    --border:    #1e1e32;
-    --accent:    #6b0f1a;
-    --accent2:   #a01020;
-    --gold:      #b8860b;
-    --gold2:     #e0a020;
-    --blood:     #8b0000;
-    --blood2:    #cc1122;
-    --text:      #c8c0b0;
-    --text2:     #706860;
-    --white:     #ece6d8;
-    --red:       #ff3333;
-    --green:     #33aa33;
-    --purple:    #5a2d8a;
-    --purple2:   #8844cc;
-    --sidebar-w: 250px;
+    --bg:       #0b0c10;
+    --bg2:      #0f1018;
+    --bg3:      #13141f;
+    --border:   #1e2035;
+    --accent:   #2a3a6a;
+    --blue:     #3a5a9a;
+    --blue2:    #5a8adc;
+    --silver:   #9aa8c0;
+    --silver2:  #c8d4e8;
+    --gold:     #c8a840;
+    --gold2:    #e8c860;
+    --text:     #b0b8cc;
+    --text2:    #5a6278;
+    --white:    #e8ecf4;
+    --red:      #cc3344;
+    --green:    #3a9a5a;
+    --sidebar-w:248px;
   }
 
-  body {
-    font-family: 'Georgia', serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
   /* SPLASH */
   #splash {
     position: fixed; inset: 0; z-index: 9999;
-    background: radial-gradient(ellipse at center, #0d0008 0%, #000 70%);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: opacity 1s ease;
+    background: radial-gradient(ellipse at 50% 40%, #0a0e1e 0%, #050508 70%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: opacity 1s ease;
   }
   #splash.hide { opacity: 0; pointer-events: none; }
 
-  .splash-particles {
+  .splash-bg-lines {
     position: absolute; inset: 0; overflow: hidden; pointer-events: none;
   }
-  .particle {
-    position: absolute; width: 2px; height: 2px;
-    background: var(--blood2); border-radius: 50%;
-    animation: floatUp linear infinite;
-    opacity: 0;
+  .splash-bg-lines::before, .splash-bg-lines::after {
+    content: '';
+    position: absolute;
+    width: 1px; background: linear-gradient(180deg, transparent, rgba(90,138,220,0.15), transparent);
+    top: 0; bottom: 0;
+    animation: lineDrift 8s ease-in-out infinite;
   }
-  @keyframes floatUp {
-    0% { transform: translateY(100vh) scale(0); opacity: 0; }
-    10% { opacity: 0.8; }
-    90% { opacity: 0.3; }
-    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-  }
+  .splash-bg-lines::before { left: 30%; animation-delay: 0s; }
+  .splash-bg-lines::after { left: 70%; animation-delay: 4s; }
+  @keyframes lineDrift { 0%,100%{opacity:0.3}50%{opacity:1} }
 
-  .splash-emblem {
-    font-size: 3.5rem; margin-bottom: 1.5rem;
-    filter: drop-shadow(0 0 30px rgba(180,0,0,0.8));
-    animation: emblemPulse 3s ease-in-out infinite;
-  }
-  @keyframes emblemPulse {
-    0%,100% { filter: drop-shadow(0 0 20px rgba(180,0,0,0.6)); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 50px rgba(180,0,0,1)); transform: scale(1.05); }
-  }
+  .splash-top { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+  .splash-sword { font-size: 2.5rem; filter: drop-shadow(0 0 20px rgba(90,138,220,0.8)); animation: swordGlow 2.5s ease-in-out infinite; }
+  @keyframes swordGlow { 0%,100%{filter:drop-shadow(0 0 10px rgba(90,138,220,0.5))}50%{filter:drop-shadow(0 0 30px rgba(90,138,220,1))} }
+
   .splash-title {
-    font-size: clamp(2.8rem, 9vw, 5.5rem);
-    font-weight: bold;
+    font-size: clamp(3rem, 9vw, 6rem); font-weight: bold;
     color: transparent;
-    background: linear-gradient(180deg, #e0a020 0%, #8b4500 50%, #cc1122 100%);
+    background: linear-gradient(180deg, #e8ecf4 0%, #9aa8c0 40%, #3a5a9a 100%);
     -webkit-background-clip: text; background-clip: text;
-    text-shadow: none;
-    filter: drop-shadow(0 0 30px rgba(180,0,0,0.5));
-    letter-spacing: 0.4em;
-    text-align: center; line-height: 1.1;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.35em; text-align: center; line-height: 1.05;
+    margin-bottom: 0.6rem;
+    filter: drop-shadow(0 2px 20px rgba(58,90,154,0.4));
   }
-  .splash-subtitle {
-    font-size: 0.85rem; color: var(--text2);
-    letter-spacing: 0.4em; text-transform: uppercase;
-    margin-bottom: 0.5rem;
+  .splash-sub {
+    font-size: 0.8rem; color: var(--text2); letter-spacing: 0.4em;
+    text-transform: uppercase; text-align: center; margin-bottom: 0.4rem;
   }
-  .splash-line {
-    width: 200px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blood2), transparent);
-    margin: 1rem auto 2.5rem;
+  .splash-divider {
+    width: 160px; height: 1px; margin: 1.2rem auto 2rem;
+    background: linear-gradient(90deg, transparent, var(--blue2), transparent);
   }
   .splash-enter {
-    color: var(--blood2); font-size: 0.8rem;
-    letter-spacing: 0.3em; text-transform: uppercase;
-    animation: blink 1.8s ease-in-out infinite;
-    border: 1px solid rgba(180,0,30,0.3);
-    padding: 0.5rem 1.5rem;
+    font-size: 0.75rem; color: var(--blue2); letter-spacing: 0.3em;
+    text-transform: uppercase; border: 1px solid rgba(90,138,220,0.3);
+    padding: 0.5rem 1.8rem; animation: blink 2s ease-in-out infinite;
   }
-  .splash-tagline {
-    position: absolute; bottom: 2rem;
-    color: #333; font-size: 0.72rem; font-style: italic;
-    letter-spacing: 0.15em;
+  .splash-quote {
+    position: absolute; bottom: 2.5rem; font-size: 0.7rem;
+    color: #252840; font-style: italic; letter-spacing: 0.1em;
+    text-align: center;
   }
 
   /* LAYOUT */
@@ -113,343 +90,307 @@
   /* SIDEBAR */
   #sidebar {
     width: var(--sidebar-w);
-    background: linear-gradient(180deg, #0a0010 0%, #080010 100%);
-    border-right: 1px solid rgba(100,0,30,0.3);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
     display: flex; flex-direction: column;
-    position: fixed; top: 0; left: 0; bottom: 0;
-    z-index: 100;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
   }
   .sidebar-logo {
-    padding: 1.5rem 1rem 1.2rem;
-    border-bottom: 1px solid rgba(100,0,30,0.3);
+    padding: 1.4rem 1rem 1.2rem; border-bottom: 1px solid var(--border);
     text-align: center;
-    background: rgba(80,0,20,0.1);
   }
-  .logo-emblem { font-size: 1.8rem; margin-bottom: 0.4rem; filter: drop-shadow(0 0 8px rgba(180,0,0,0.6)); }
-  .logo-title { font-size: 1rem; font-weight: bold; color: var(--gold2); letter-spacing: 0.25em; }
-  .logo-sub { font-size: 0.6rem; color: #552020; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.2rem; }
+  .logo-icon { font-size: 1.6rem; margin-bottom: 0.4rem; filter: drop-shadow(0 0 8px rgba(90,138,220,0.5)); }
+  .logo-title { font-size: 0.95rem; font-weight: bold; color: var(--silver2); letter-spacing: 0.2em; }
+  .logo-sub { font-size: 0.58rem; color: var(--text2); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.2rem; }
 
-  .sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; }
+  .sidebar-nav { flex: 1; padding: 0.6rem 0; overflow-y: auto; }
   .nav-item {
-    display: flex; align-items: center; gap: 0.7rem;
-    padding: 0.6rem 1.1rem;
-    cursor: pointer; font-size: 0.82rem;
-    color: #554040;
-    border-left: 2px solid transparent;
-    transition: all 0.2s; user-select: none;
-    letter-spacing: 0.03em;
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.58rem 1.1rem; cursor: pointer; font-size: 0.8rem;
+    color: var(--text2); border-left: 2px solid transparent;
+    transition: all 0.18s; user-select: none; letter-spacing: 0.02em;
   }
-  .nav-item:hover { color: var(--text); background: rgba(180,0,30,0.05); }
-  .nav-item.active { color: var(--gold2); border-left-color: var(--blood2); background: rgba(180,0,30,0.08); }
-  .nav-item .badge {
-    margin-left: auto;
-    background: var(--blood); color: #ffd0d0;
-    font-size: 0.62rem; padding: 0.1rem 0.4rem;
-    border-radius: 20px; min-width: 1.4rem; text-align: center;
+  .nav-item:hover { color: var(--silver); background: rgba(90,138,220,0.04); }
+  .nav-item.active { color: var(--silver2); border-left-color: var(--blue2); background: rgba(90,138,220,0.07); }
+  .nav-icon { font-size: 0.85rem; width: 1.1rem; text-align: center; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto; background: var(--accent); color: var(--silver2);
+    font-size: 0.6rem; padding: 0.08rem 0.4rem;
+    border-radius: 20px; min-width: 1.3rem; text-align: center;
   }
   .nav-sep {
-    padding: 0.6rem 1.1rem 0.2rem;
-    font-size: 0.58rem; color: #3a2a2a;
+    padding: 0.6rem 1.1rem 0.2rem; font-size: 0.56rem; color: #252840;
     text-transform: uppercase; letter-spacing: 0.2em;
-    border-top: 1px solid rgba(80,0,20,0.4); margin-top: 0.3rem;
+    border-top: 1px solid var(--border); margin-top: 0.4rem;
   }
-  .nav-item.secret { color: #2a1a2a; }
-  .nav-item.secret:hover { color: var(--purple2); background: rgba(90,45,138,0.05); }
-  .nav-item.secret.unlocked { color: #553355; }
-  .nav-item.secret.active { color: var(--purple2); border-left-color: var(--purple2); }
+  .nav-item.secret { color: #252830; }
+  .nav-item.secret:hover { color: #6a4aaa; background: rgba(100,60,160,0.04); }
+  .nav-item.secret.unlocked { color: var(--text2); }
+  .nav-item.secret.active { color: #9a6aee; border-left-color: #7a4acc; }
 
-  .sidebar-bottom {
-    padding: 0.75rem;
-    border-top: 1px solid rgba(100,0,30,0.3);
-    display: flex; flex-direction: column; gap: 0.4rem;
-    background: rgba(20,0,10,0.5);
+  .sidebar-footer {
+    padding: 0.7rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 0.35rem;
   }
-  .sidebar-role { font-size: 0.62rem; color: #553333; text-align: center; letter-spacing: 0.1em; }
-  .sidebar-role span { color: var(--gold); }
-  .music-bar { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.72rem; color: #3a2a2a; }
-  .music-bar button { background: transparent; border: none; color: #442222; cursor: pointer; font-size: 0.9rem; }
-  .music-bar button:hover { color: var(--blood2); }
+  .sidebar-user { font-size: 0.6rem; color: var(--text2); text-align: center; letter-spacing: 0.08em; }
+  .sidebar-user span { color: var(--silver); }
+  .music-row { display: flex; align-items: center; justify-content: center; gap: 0.4rem; font-size: 0.7rem; color: #252840; }
+  .music-row button { background: transparent; border: none; color: #353860; cursor: pointer; font-size: 0.85rem; transition: color 0.15s; }
+  .music-row button:hover { color: var(--blue2); }
 
   /* MAIN */
-  #main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+  #main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
 
   /* TOPBAR */
   .topbar {
-    background: linear-gradient(90deg, #0a0010 0%, #08000e 100%);
-    border-bottom: 1px solid rgba(100,0,30,0.3);
-    padding: 0.7rem 1.5rem;
-    display: flex; align-items: center; gap: 1rem;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 0.65rem 1.4rem;
+    display: flex; align-items: center; gap: 0.75rem;
     position: sticky; top: 0; z-index: 50;
   }
-  .topbar-left { display: flex; align-items: center; gap: 0.75rem; flex: 1; }
-  .topbar-icon { font-size: 1rem; color: var(--blood2); }
-  .topbar h1 { font-size: 0.9rem; color: var(--gold); letter-spacing: 0.1em; }
-  .topbar-actions { display: flex; align-items: center; gap: 0.5rem; }
-  .topbar-divider { color: #2a1a1a; }
+  .topbar-icon { font-size: 0.9rem; color: var(--blue2); }
+  .topbar h1 { font-size: 0.85rem; color: var(--silver); flex: 1; letter-spacing: 0.08em; font-weight: normal; }
+  .topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+  .badge-mode { font-size: 0.6rem; padding: 0.15rem 0.5rem; border-radius: 2px; border: 1px solid var(--border); color: var(--text2); letter-spacing: 0.05em; }
+  .badge-mode.editor { border-color: var(--blue); color: var(--blue2); cursor: pointer; }
+  .badge-mode.editor:hover { background: rgba(90,138,220,0.08); }
 
   /* BUTTONS */
   .btn {
-    padding: 0.38rem 0.85rem;
-    border: 1px solid rgba(100,0,30,0.4);
-    background: rgba(60,0,15,0.3);
-    color: #886060;
-    font-family: 'Georgia', serif; font-size: 0.76rem;
-    cursor: pointer; transition: all 0.2s; border-radius: 2px;
-    letter-spacing: 0.04em;
+    padding: 0.35rem 0.8rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2);
+    font-family: 'Georgia', serif; font-size: 0.74rem;
+    cursor: pointer; transition: all 0.15s; border-radius: 2px; letter-spacing: 0.03em;
   }
-  .btn:hover { border-color: var(--blood2); color: var(--text); background: rgba(120,0,30,0.3); }
-  .btn-blood { border-color: var(--blood2); color: var(--blood2); background: rgba(100,0,20,0.2); }
-  .btn-blood:hover { background: rgba(140,0,30,0.4); color: #ffaaaa; }
-  .btn-gold { border-color: var(--gold); color: var(--gold); background: rgba(100,70,0,0.2); }
-  .btn-gold:hover { background: rgba(150,100,0,0.3); color: var(--gold2); }
-  .btn-sm { padding: 0.22rem 0.55rem; font-size: 0.7rem; }
-  .mode-badge { font-size: 0.62rem; padding: 0.18rem 0.55rem; border-radius: 2px; border: 1px solid rgba(80,0,20,0.4); color: #443333; }
-  .mode-badge.editor { border-color: var(--blood); color: var(--blood2); cursor: pointer; }
+  .btn:hover { border-color: var(--blue2); color: var(--silver); }
+  .btn-blue { border-color: var(--blue); color: var(--blue2); background: rgba(58,90,154,0.1); }
+  .btn-blue:hover { background: rgba(90,138,220,0.15); color: var(--silver2); }
+  .btn-gold { border-color: var(--gold); color: var(--gold); background: rgba(200,168,64,0.08); }
+  .btn-gold:hover { background: rgba(200,168,64,0.15); color: var(--gold2); }
+  .btn-red { border-color: #442030; color: #aa3348; background: rgba(80,20,40,0.15); }
+  .btn-red:hover { background: rgba(120,30,50,0.25); color: #dd4455; }
+  .btn-sm { padding: 0.22rem 0.55rem; font-size: 0.68rem; }
 
   /* CONTENT */
-  .content { padding: 1.5rem; }
+  .content { padding: 1.4rem; flex: 1; }
 
   /* DASHBOARD HERO */
-  .dashboard-hero {
-    text-align: center; padding: 2rem 1rem 2rem;
-    margin-bottom: 1.5rem;
-    background: radial-gradient(ellipse at center top, rgba(80,0,20,0.2) 0%, transparent 70%);
-    border-bottom: 1px solid rgba(80,0,20,0.2);
+  .dash-hero {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 2rem 1rem 1.8rem; margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
     position: relative;
   }
-  .hero-emblem { font-size: 2.5rem; margin-bottom: 0.75rem; filter: drop-shadow(0 0 15px rgba(180,0,0,0.5)); }
-  .hero-title { font-size: 1.4rem; color: var(--gold2); letter-spacing: 0.3em; margin-bottom: 0.3rem; }
-  .hero-sub { font-size: 0.72rem; color: #553333; letter-spacing: 0.15em; text-transform: uppercase; }
-  .hero-line { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--blood), transparent); margin: 1rem auto 0; }
+  .dash-hero-sword { font-size: 2.2rem; margin-bottom: 0.8rem; filter: drop-shadow(0 0 12px rgba(90,138,220,0.4)); }
+  .dash-hero-title { font-size: 1.3rem; color: var(--silver2); letter-spacing: 0.25em; margin-bottom: 0.2rem; font-weight: normal; }
+  .dash-hero-sub { font-size: 0.65rem; color: var(--text2); letter-spacing: 0.15em; text-transform: uppercase; }
+  .dash-hero-line { width: 100px; height: 1px; background: linear-gradient(90deg,transparent,var(--blue2),transparent); margin: 1rem auto 0; }
 
   /* STATS */
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 1.4rem; }
   .stat-card {
-    background: linear-gradient(135deg, #0c0010 0%, #0a000e 100%);
-    border: 1px solid rgba(80,0,20,0.35);
-    padding: 1rem 0.75rem; text-align: center; border-radius: 3px;
-    position: relative; overflow: hidden;
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 0.9rem 0.75rem; text-align: center; border-radius: 3px;
     transition: border-color 0.2s;
   }
-  .stat-card:hover { border-color: rgba(180,0,30,0.5); }
-  .stat-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blood2), transparent);
-  }
-  .stat-icon { font-size: 1.3rem; margin-bottom: 0.4rem; }
-  .stat-num { font-size: 1.9rem; font-weight: bold; color: var(--blood2); line-height: 1; }
-  .stat-label { font-size: 0.62rem; color: #553333; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.3rem; }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-icon { font-size: 1.1rem; margin-bottom: 0.35rem; }
+  .stat-num { font-size: 1.8rem; font-weight: bold; color: var(--blue2); line-height: 1; }
+  .stat-label { font-size: 0.58rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.3rem; }
 
   /* SECTION HEADER */
   .section-header {
-    display: flex; align-items: center; gap: 1rem;
-    margin-bottom: 1rem; padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(80,0,20,0.3);
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1rem; padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--border);
   }
-  .section-header h2 { font-size: 0.92rem; color: var(--gold); flex: 1; letter-spacing: 0.1em; }
+  .section-header h2 { font-size: 0.88rem; color: var(--silver); flex: 1; letter-spacing: 0.08em; font-weight: normal; }
 
   /* FILTER TABS */
-  .filter-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .filter-tabs { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
   .filter-tab {
-    padding: 0.28rem 0.75rem; border: 1px solid rgba(80,0,20,0.3);
-    background: transparent; color: #554040; font-size: 0.72rem;
-    cursor: pointer; border-radius: 20px; transition: all 0.2s;
-    font-family: 'Georgia', serif;
+    padding: 0.25rem 0.7rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); font-size: 0.7rem;
+    cursor: pointer; border-radius: 20px; transition: all 0.15s; font-family: 'Georgia', serif;
   }
-  .filter-tab:hover { border-color: var(--blood); color: var(--text); }
-  .filter-tab.active { border-color: var(--blood2); color: var(--blood2); background: rgba(140,0,30,0.1); }
+  .filter-tab:hover { border-color: var(--blue); color: var(--silver); }
+  .filter-tab.active { border-color: var(--blue2); color: var(--blue2); background: rgba(90,138,220,0.08); }
 
   /* SEARCH */
   .search-bar {
     display: flex; align-items: center; gap: 0.5rem;
-    background: var(--bg3); border: 1px solid rgba(80,0,20,0.3);
-    border-radius: 2px; padding: 0.4rem 0.75rem; margin-bottom: 1rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 2px; padding: 0.38rem 0.7rem; margin-bottom: 0.9rem;
+    transition: border-color 0.15s;
   }
-  .search-bar input { background: transparent; border: none; color: var(--white); font-family: 'Georgia', serif; font-size: 0.8rem; flex: 1; }
+  .search-bar:focus-within { border-color: var(--accent); }
+  .search-bar input { background: transparent; border: none; color: var(--white); font-family: 'Georgia', serif; font-size: 0.78rem; flex: 1; }
   .search-bar input:focus { outline: none; }
-  .search-bar input::placeholder { color: #443333; }
+  .search-bar input::placeholder { color: var(--text2); }
 
-  /* CARDS GRID */
-  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
-
-  /* DEMON CARD */
-  .demon-card {
-    background: linear-gradient(135deg, #0c0012 0%, #0a000f 100%);
-    border: 1px solid rgba(80,0,20,0.4);
-    border-radius: 3px; padding: 1rem;
-    position: relative; transition: border-color 0.2s;
+  /* CARDS */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 0.85rem; }
+  .member-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1rem; position: relative; transition: border-color 0.18s;
   }
-  .demon-card:hover { border-color: rgba(180,0,30,0.5); }
-  .demon-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(140,0,30,0.3), transparent);
-  }
-  .card-header { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .member-card:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.7rem; }
   .card-avatar {
-    width: 46px; height: 46px; border-radius: 3px;
-    background: rgba(60,0,15,0.5); border: 1px solid rgba(100,0,30,0.4);
+    width: 44px; height: 44px; border-radius: 2px;
+    background: var(--bg2); border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; flex-shrink: 0;
+    font-size: 1.2rem; flex-shrink: 0;
   }
-  .card-name { font-size: 0.92rem; color: var(--white); font-weight: bold; }
-  .card-rank { font-size: 0.68rem; color: var(--gold); margin-top: 0.15rem; letter-spacing: 0.05em; }
-  .card-power { font-size: 0.67rem; color: var(--blood2); margin-top: 0.1rem; }
+  .card-name { font-size: 0.88rem; color: var(--white); font-weight: bold; line-height: 1.2; }
+  .card-rank { font-size: 0.65rem; color: var(--blue2); margin-top: 0.15rem; letter-spacing: 0.04em; }
+  .card-breath { font-size: 0.63rem; color: var(--text2); margin-top: 0.08rem; }
   .card-status {
     position: absolute; top: 0.7rem; right: 0.7rem;
-    font-size: 0.6rem; padding: 0.1rem 0.45rem;
-    border-radius: 20px; border: 1px solid;
+    font-size: 0.58rem; padding: 0.08rem 0.42rem; border-radius: 20px; border: 1px solid;
   }
-  .status-alive { color: #cc3333; border-color: #881111; background: rgba(100,0,0,0.2); }
-  .status-dead { color: #443333; border-color: #2a1a1a; background: rgba(0,0,0,0.3); }
-  .status-dechu { color: var(--purple2); border-color: var(--purple); background: rgba(80,20,100,0.15); }
+  .status-alive { color: var(--green); border-color: #2a6a3a; background: rgba(30,90,50,0.15); }
+  .status-dead { color: var(--text2); border-color: #252835; background: rgba(0,0,0,0.2); }
+  .status-retired { color: #7a6aaa; border-color: #3a3060; background: rgba(50,40,80,0.15); }
+  .card-info-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.68rem; color: var(--text2); margin-bottom: 0.18rem; }
+  .card-info-row span:last-child { color: var(--text); }
+  .card-obs { font-size: 0.68rem; color: var(--text2); margin-top: 0.35rem; line-height: 1.55; }
   .card-footer {
     display: flex; align-items: center; justify-content: space-between;
-    padding-top: 0.5rem; border-top: 1px solid rgba(60,0,15,0.4);
-    font-size: 0.68rem; color: #443333; margin-top: 0.5rem;
+    padding-top: 0.45rem; border-top: 1px solid var(--border); margin-top: 0.5rem;
+    font-size: 0.65rem; color: var(--text2);
   }
-  .card-actions { display: flex; gap: 0.3rem; }
-  .info-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: #553333; margin-bottom: 0.2rem; }
-  .info-row span:last-child { color: var(--text2); }
+  .card-actions { display: flex; gap: 0.25rem; }
 
-  /* TARGET CARDS */
-  .target-card { border-color: rgba(120,0,0,0.5); }
-  .target-card:hover { border-color: var(--blood2); }
-  .priority-badge { display: inline-block; font-size: 0.62rem; padding: 0.1rem 0.45rem; border-radius: 20px; font-weight: bold; }
-  .priority-1 { background: rgba(180,0,0,0.2); color: #ff5555; border: 1px solid #aa1111; }
-  .priority-2 { background: rgba(180,80,0,0.2); color: #ff8833; border: 1px solid #884400; }
-  .priority-3 { background: rgba(120,120,0,0.15); color: var(--gold); border: 1px solid var(--gold); }
+  /* TARGET CARD */
+  .target-card { border-color: #2a1a1e; }
+  .target-card:hover { border-color: #5a2a35; }
+  .priority-badge { display: inline-block; font-size: 0.6rem; padding: 0.08rem 0.42rem; border-radius: 20px; }
+  .p1 { background: rgba(150,20,40,0.15); color: #ee4455; border: 1px solid #6a1a28; }
+  .p2 { background: rgba(150,90,10,0.15); color: #dd9933; border: 1px solid #6a4010; }
+  .p3 { background: rgba(100,100,20,0.15); color: var(--gold); border: 1px solid #555015; }
 
   /* MISSIONS */
-  .missions-board { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem; }
-  @media(max-width:900px){.missions-board{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:580px){.missions-board{grid-template-columns:1fr}}
-  .mission-col { background: rgba(10,0,15,0.8); border: 1px solid rgba(60,0,20,0.35); border-radius: 3px; padding: 0.75rem; }
-  .col-header { font-size: 0.68rem; color: #553333; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(60,0,20,0.3); }
-  .mission-card { background: #0a000f; border: 1px solid rgba(60,0,20,0.4); border-radius: 2px; padding: 0.7rem; margin-bottom: 0.5rem; }
-  .mission-card-title { font-size: 0.8rem; color: var(--text); margin-bottom: 0.3rem; }
-  .mission-card-desc { font-size: 0.7rem; color: #553333; line-height: 1.5; }
+  .missions-board { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.7rem; }
+  @media(max-width:860px){.missions-board{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.missions-board{grid-template-columns:1fr}}
+  .mission-col { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; }
+  .col-title { font-size: 0.62rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.65rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border); }
+  .mission-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 0.65rem; margin-bottom: 0.45rem; }
+  .mission-title { font-size: 0.78rem; color: var(--text); margin-bottom: 0.25rem; }
+  .mission-members { font-size: 0.65rem; color: var(--blue2); margin-bottom: 0.2rem; }
+  .mission-desc { font-size: 0.67rem; color: var(--text2); line-height: 1.5; }
 
-  /* HISTORY TABLE */
-  .history-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-  .history-table th { background: #0a000f; color: #553333; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.62rem; padding: 0.6rem 0.75rem; text-align: left; border-bottom: 1px solid rgba(60,0,20,0.4); font-weight: normal; }
-  .history-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid rgba(40,0,15,0.4); color: var(--text); vertical-align: middle; }
-  .history-table tr:hover td { background: rgba(80,0,20,0.05); }
-  .history-action { display: inline-block; font-size: 0.62rem; padding: 0.1rem 0.45rem; border-radius: 20px; }
-  .action-add { background: rgba(0,100,0,0.15); color: #44aa44; }
-  .action-edit { background: rgba(120,80,0,0.15); color: var(--gold); }
-  .action-del { background: rgba(120,0,0,0.15); color: var(--blood2); }
+  /* HISTORY */
+  .history-table { width: 100%; border-collapse: collapse; font-size: 0.76rem; }
+  .history-table th { background: var(--bg3); color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.6rem; padding: 0.55rem 0.7rem; text-align: left; border-bottom: 1px solid var(--border); font-weight: normal; }
+  .history-table td { padding: 0.52rem 0.7rem; border-bottom: 1px solid rgba(30,32,53,0.6); vertical-align: middle; }
+  .history-table tr:hover td { background: rgba(90,138,220,0.02); }
+  .ha { display: inline-block; font-size: 0.6rem; padding: 0.08rem 0.42rem; border-radius: 20px; }
+  .ha-add { background: rgba(30,90,50,0.2); color: #4aaa6a; }
+  .ha-edit { background: rgba(100,80,10,0.2); color: var(--gold); }
+  .ha-del { background: rgba(90,20,30,0.2); color: #cc3344; }
 
   /* CODEX */
-  .codex-section { margin-bottom: 0.4rem; border: 1px solid rgba(60,0,20,0.35); border-radius: 2px; overflow: hidden; }
-  .codex-toggle { width: 100%; padding: 0.85rem 1rem; background: rgba(15,0,10,0.8); border: none; color: #886644; font-family: 'Georgia', serif; font-size: 0.82rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
-  .codex-toggle:hover { background: rgba(60,0,20,0.3); color: var(--gold); }
-  .codex-toggle .arrow { margin-left: auto; transition: transform 0.2s; font-size: 0.7rem; color: #442222; }
-  .codex-toggle.open { color: var(--gold); }
-  .codex-toggle.open .arrow { transform: rotate(180deg); }
-  .codex-body { padding: 1rem 1.2rem; font-size: 0.8rem; line-height: 1.9; color: var(--text); border-top: 1px solid rgba(60,0,20,0.3); background: #080010; display: none; }
+  .codex-item { margin-bottom: 0.35rem; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .codex-btn { width: 100%; padding: 0.8rem 1rem; background: var(--bg3); border: none; color: var(--text); font-family: 'Georgia', serif; font-size: 0.8rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; }
+  .codex-btn:hover { background: rgba(90,138,220,0.05); }
+  .codex-btn.open { color: var(--silver2); background: rgba(90,138,220,0.06); }
+  .codex-arrow { margin-left: auto; font-size: 0.65rem; color: var(--text2); transition: transform 0.2s; }
+  .codex-btn.open .codex-arrow { transform: rotate(180deg); }
+  .codex-body { padding: 0.9rem 1.1rem; font-size: 0.78rem; line-height: 1.85; color: var(--text); border-top: 1px solid var(--border); background: var(--bg2); display: none; }
   .codex-body.open { display: block; }
-  .codex-body strong { color: var(--gold2); }
+  .codex-body strong { color: var(--silver2); }
 
   /* ADMIN */
-  .admin-section { background: #0a000f; border: 1px solid rgba(60,0,20,0.35); border-radius: 3px; padding: 1.1rem; margin-bottom: 1rem; }
-  .admin-section h3 { font-size: 0.82rem; color: var(--gold); margin-bottom: 1rem; letter-spacing: 0.1em; }
-  .whitelist-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(40,0,15,0.4); font-size: 0.78rem; }
-  .whitelist-item:last-child { border-bottom: none; }
+  .admin-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 1.1rem; margin-bottom: 0.9rem; }
+  .admin-box h3 { font-size: 0.78rem; color: var(--silver); margin-bottom: 0.9rem; letter-spacing: 0.08em; font-weight: normal; }
+  .wl-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.76rem; }
+  .wl-item:last-child { border-bottom: none; }
   .wl-name { color: var(--text); flex: 1; }
-  .wl-id { color: #443333; font-size: 0.68rem; font-family: monospace; }
-  .wl-roles { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-  .role-badge { font-size: 0.58rem; padding: 0.1rem 0.4rem; border-radius: 2px; border: 1px solid; }
-  .role-admin { color: #ff7700; border-color: #884400; background: rgba(100,40,0,0.2); }
-  .role-veilleur { color: var(--gold); border-color: var(--gold); background: rgba(100,60,0,0.15); }
-  .role-sphere { color: var(--purple2); border-color: var(--purple); background: rgba(60,20,90,0.2); }
+  .wl-id { color: var(--text2); font-size: 0.65rem; font-family: monospace; }
+  .wl-roles { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .role-badge { font-size: 0.56rem; padding: 0.08rem 0.38rem; border-radius: 2px; border: 1px solid; }
+  .r-admin { color: #dd8833; border-color: #6a4010; background: rgba(100,60,10,0.15); }
+  .r-veilleur { color: var(--blue2); border-color: var(--accent); background: rgba(40,60,100,0.15); }
+  .r-sphere { color: #9a6aee; border-color: #4a3080; background: rgba(60,40,100,0.15); }
 
   /* SECRET */
-  .secret-header { background: linear-gradient(135deg, #08001a 0%, #0a0015 100%); border: 1px solid rgba(90,45,138,0.3); border-radius: 3px; padding: 1.2rem; margin-bottom: 1rem; }
-  .secret-header h2 { color: var(--purple2); letter-spacing: 0.2em; }
-  .secret-header p { font-size: 0.72rem; color: #3a2245; margin-top: 0.4rem; }
-  .rule-item { background: #08001a; border: 1px solid rgba(90,45,138,0.2); border-radius: 2px; margin-bottom: 0.4rem; overflow: hidden; }
-  .rule-toggle { width: 100%; padding: 0.85rem 1rem; background: transparent; border: none; color: #4a2a6a; font-family: 'Georgia', serif; font-size: 0.8rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: color 0.2s; }
-  .rule-toggle:hover { color: var(--purple2); }
-  .rule-num { color: #3a1a5a; font-size: 0.68rem; font-style: italic; min-width: 1rem; }
-  .rule-body { padding: 0.75rem 1rem; font-size: 0.78rem; color: var(--text); line-height: 1.8; border-top: 1px solid rgba(90,45,138,0.2); display: none; }
+  .secret-top { background: linear-gradient(135deg, #0a0a18 0%, #0d0b20 100%); border: 1px solid #1e1840; border-radius: 3px; padding: 1.1rem; margin-bottom: 1rem; }
+  .secret-top h2 { color: #9a6aee; letter-spacing: 0.18em; font-size: 0.9rem; font-weight: normal; }
+  .secret-top p { font-size: 0.68rem; color: #352850; margin-top: 0.35rem; }
+  .rule-card { background: var(--bg3); border: 1px solid #1e1840; border-radius: 2px; margin-bottom: 0.35rem; overflow: hidden; }
+  .rule-btn { width: 100%; padding: 0.75rem 1rem; background: transparent; border: none; color: #504060; font-family: 'Georgia', serif; font-size: 0.78rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: color 0.15s; }
+  .rule-btn:hover { color: #9a6aee; }
+  .rule-num { font-size: 0.62rem; color: #302248; font-style: italic; min-width: 1rem; }
+  .rule-body { padding: 0.7rem 1rem; font-size: 0.76rem; color: var(--text); line-height: 1.8; border-top: 1px solid #1e1840; display: none; }
   .rule-body.open { display: block; }
-  .secret-op-card { background: #08001a; border: 1px solid rgba(90,45,138,0.3); border-radius: 3px; padding: 1rem; margin-bottom: 0.75rem; }
-  .op-type { display: inline-block; font-size: 0.62rem; padding: 0.1rem 0.45rem; border-radius: 20px; margin-bottom: 0.4rem; background: rgba(90,45,138,0.2); color: #aa66ff; border: 1px solid #5a2d8a; }
-  .op-priority-critique { background: rgba(180,0,0,0.2); color: #ff5555; border: 1px solid #aa1111; }
-  .op-priority-haute { background: rgba(180,80,0,0.2); color: #ff8833; border: 1px solid #884400; }
-  .op-priority-normale { background: rgba(60,60,60,0.2); color: #888; border: 1px solid #444; }
+  .op-card { background: var(--bg3); border: 1px solid #1e1840; border-radius: 3px; padding: 0.9rem; margin-bottom: 0.65rem; }
+  .op-type-badge { display: inline-block; font-size: 0.6rem; padding: 0.08rem 0.42rem; border-radius: 20px; background: rgba(90,45,138,0.2); color: #aa7aee; border: 1px solid #4a3080; margin-bottom: 0.35rem; }
+  .op-crit { background: rgba(120,20,40,0.2); color: #ee4455; border-color: #6a1a28; }
+  .op-haute { background: rgba(120,70,10,0.2); color: #dd9933; border-color: #6a4010; }
+  .op-norm { background: rgba(40,40,60,0.2); color: #606080; border-color: #303050; }
 
   /* MODALS */
-  .modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(5,6,12,0.88); display: flex; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.hidden { display: none; }
-  .modal { background: linear-gradient(135deg, #0c0018 0%, #0a0012 100%); border: 1px solid rgba(100,0,30,0.4); border-radius: 4px; padding: 1.5rem; max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-  .modal-title { font-size: 0.95rem; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(80,0,20,0.35); letter-spacing: 0.1em; }
-  .modal-close { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: #442222; cursor: pointer; font-size: 1rem; }
-  .modal-close:hover { color: var(--blood2); }
-
-  /* FORMS */
-  .form-group { margin-bottom: 0.85rem; }
-  .form-group label { display: block; font-size: 0.68rem; color: #664444; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.5rem 0.7rem; background: rgba(10,0,15,0.8); border: 1px solid rgba(80,0,20,0.4); color: var(--white); font-family: 'Georgia', serif; font-size: 0.8rem; border-radius: 2px; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--blood2); }
-  .form-group select option { background: #0c0010; }
-  .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-  .form-hint { font-size: 0.68rem; color: #554444; margin-top: 0.3rem; line-height: 1.5; }
-  .form-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.2rem; }
-  .checkbox-label { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.76rem; color: var(--text); cursor: pointer; margin-bottom: 0.5rem; }
-  .checkbox-label input[type=checkbox] { margin-top: 0.1rem; accent-color: var(--blood2); }
-  .checkbox-desc { font-size: 0.65rem; color: #554444; }
-
-  /* LOGIN */
+  .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.4rem; max-width: 460px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+  .modal-title { font-size: 0.9rem; color: var(--silver); margin-bottom: 1.1rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--border); letter-spacing: 0.08em; font-weight: normal; }
+  .modal-close { position: absolute; top: 0.9rem; right: 0.9rem; background: transparent; border: none; color: var(--text2); cursor: pointer; font-size: 0.95rem; }
+  .modal-close:hover { color: var(--red); }
+  .form-group { margin-bottom: 0.8rem; }
+  .form-group label { display: block; font-size: 0.64rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.28rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.48rem 0.65rem; background: var(--bg3); border: 1px solid var(--border); color: var(--white); font-family: 'Georgia', serif; font-size: 0.78rem; border-radius: 2px; transition: border-color 0.15s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--blue); }
+  .form-group select option { background: var(--bg3); }
+  .form-group textarea { resize: vertical; min-height: 75px; line-height: 1.6; }
+  .form-hint { font-size: 0.65rem; color: var(--text2); margin-top: 0.28rem; line-height: 1.5; }
+  .form-actions { display: flex; gap: 0.45rem; justify-content: flex-end; margin-top: 1.1rem; }
+  .cb-label { display: flex; align-items: flex-start; gap: 0.45rem; font-size: 0.74rem; color: var(--text); cursor: pointer; margin-bottom: 0.45rem; }
+  .cb-label input[type=checkbox] { margin-top: 0.12rem; accent-color: var(--blue2); }
+  .cb-desc { font-size: 0.62rem; color: var(--text2); }
   .login-step { display: none; }
   .login-step.active { display: block; }
-  .login-info { background: rgba(10,0,15,0.8); border: 1px solid rgba(80,0,20,0.3); padding: 0.75rem; border-radius: 2px; margin-bottom: 1rem; font-size: 0.76rem; line-height: 1.7; color: #775555; }
-  .login-info strong { color: var(--gold); }
-
-  /* CREDS */
-  .creds-box { background: rgba(10,0,15,0.8); border: 1px solid rgba(80,0,20,0.3); border-radius: 2px; padding: 0.75rem; margin-bottom: 0.75rem; }
-  .creds-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; font-size: 0.78rem; }
+  .login-info { background: var(--bg3); border: 1px solid var(--border); padding: 0.7rem; border-radius: 2px; margin-bottom: 0.9rem; font-size: 0.74rem; line-height: 1.7; color: var(--text2); }
+  .login-info strong { color: var(--silver); }
+  .creds-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; padding: 0.7rem; margin-bottom: 0.7rem; }
+  .creds-row { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.38rem; font-size: 0.76rem; }
   .creds-row:last-child { margin-bottom: 0; }
-  .creds-label { color: #664444; min-width: 80px; font-size: 0.68rem; }
-  .creds-val { color: var(--white); flex: 1; font-family: monospace; }
-  .creds-copy { background: transparent; border: 1px solid rgba(80,0,20,0.3); color: #664444; cursor: pointer; padding: 0.1rem 0.45rem; border-radius: 2px; font-size: 0.68rem; }
-  .creds-copy:hover { border-color: var(--blood2); color: var(--blood2); }
-
-  /* WARNING */
-  .warning-box { background: rgba(80,0,0,0.15); border: 1px solid rgba(140,0,0,0.3); border-radius: 2px; padding: 0.55rem 0.75rem; font-size: 0.72rem; color: #cc6655; margin-top: 0.75rem; }
+  .creds-lbl { color: var(--text2); min-width: 75px; font-size: 0.64rem; }
+  .creds-val { color: var(--white); flex: 1; font-family: monospace; font-size: 0.75rem; }
+  .creds-copy { background: transparent; border: 1px solid var(--border); color: var(--text2); cursor: pointer; padding: 0.08rem 0.42rem; border-radius: 2px; font-size: 0.64rem; }
+  .creds-copy:hover { border-color: var(--blue2); color: var(--blue2); }
+  .warn-box { background: rgba(60,20,30,0.2); border: 1px solid #3a1520; border-radius: 2px; padding: 0.5rem 0.7rem; font-size: 0.68rem; color: #aa4455; margin-top: 0.7rem; }
 
   /* EMPTY */
-  .empty-state { text-align: center; padding: 3rem 1rem; color: #443333; font-style: italic; font-size: 0.82rem; }
-  .empty-icon { font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.3; display: block; }
+  .empty-state { text-align: center; padding: 2.5rem 1rem; color: var(--text2); font-style: italic; font-size: 0.8rem; }
+  .empty-icon { font-size: 1.8rem; display: block; margin-bottom: 0.65rem; opacity: 0.25; }
 
   /* TOAST */
-  #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; z-index: 9999; }
-  .toast { background: #0c0018; border: 1px solid rgba(80,0,20,0.5); padding: 0.7rem 1rem; border-radius: 3px; font-size: 0.78rem; max-width: 280px; animation: slideIn 0.3s ease; }
-  .toast-success { border-color: #224422; color: #44aa44; }
-  .toast-error { border-color: #441111; color: var(--blood2); }
-  .toast-info { border-color: rgba(120,60,0,0.5); color: var(--gold); }
+  #toast-container { position: fixed; bottom: 1.4rem; right: 1.4rem; display: flex; flex-direction: column; gap: 0.45rem; z-index: 9999; }
+  .toast { background: var(--bg2); border: 1px solid var(--border); padding: 0.65rem 0.95rem; border-radius: 3px; font-size: 0.76rem; max-width: 270px; animation: slideIn 0.25s ease; }
+  .toast-success { border-color: #1a3a28; color: #4aaa6a; }
+  .toast-error { border-color: #3a1520; color: #cc3344; }
+  .toast-info { border-color: var(--accent); color: var(--blue2); }
 
-  /* ANIMATIONS */
-  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
-  @keyframes pulse { 0%,100%{opacity:0.4}50%{opacity:1} }
-  @keyframes slideIn { from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:translateX(0)} }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
-  .fade-in { animation: fadeIn 0.4s ease; }
-
-  /* SCROLLBAR */
-  ::-webkit-scrollbar{width:4px;height:4px}
-  ::-webkit-scrollbar-track{background:var(--bg)}
-  ::-webkit-scrollbar-thumb{background:#2a0010;border-radius:2px}
-  ::-webkit-scrollbar-thumb:hover{background:var(--blood)}
-
-  .divider { border: none; border-top: 1px solid rgba(60,0,20,0.3); margin: 1rem 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
   .view { display: none; }
   .view.active { display: block; }
+  .fade-in { animation: fadeIn 0.3s ease; }
+
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.25} }
+  @keyframes slideIn { from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)} }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)} }
+
+  ::-webkit-scrollbar{width:4px;height:4px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
   @media(max-width:640px){
     :root{--sidebar-w:0px}
-    #sidebar{transform:translateX(-100%)}
-    #sidebar.open{transform:translateX(0);width:250px}
+    #sidebar{transform:translateX(-100%);width:248px}
+    #sidebar.open{transform:translateX(0)}
     #main{margin-left:0}
     .cards-grid{grid-template-columns:1fr}
   }
@@ -459,60 +400,57 @@
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-particles" id="particles"></div>
-  <div class="splash-emblem">🩸</div>
+  <div class="splash-bg-lines"></div>
+  <div class="splash-top">
+    <div class="splash-sword">⚔</div>
+  </div>
   <div class="splash-title">CODEX<br>OBSCURA</div>
-  <div class="splash-subtitle">Archives Démoniaques Suprêmes</div>
-  <div class="splash-line"></div>
-  <div class="splash-enter">— Entrer dans les Ténèbres —</div>
-  <div class="splash-tagline">Que le sang coule éternellement</div>
+  <div class="splash-sub">Archives des Pourfendeurs de Démons</div>
+  <div class="splash-divider"></div>
+  <div class="splash-enter">— Entrer dans les Archives —</div>
+  <div class="splash-quote">« Aucun démon ne survivra à notre lame »</div>
 </div>
 
 <!-- APP -->
 <div id="app" style="display:none">
 
-  <!-- SIDEBAR -->
   <nav id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-emblem">🩸</div>
+      <div class="logo-icon">⚔</div>
       <div class="logo-title">CODEX OBSCURA</div>
-      <div class="logo-sub">Archives Démoniaques</div>
+      <div class="logo-sub">Archives des Pourfendeurs</div>
     </div>
     <div class="sidebar-nav">
-      <div class="nav-item active" onclick="showView('dashboard')">🏴 Tableau de Bord</div>
-      <div class="nav-item" onclick="showView('registre')">🩸 Registre des Démons <span class="badge" id="badge-registre">0</span></div>
-      <div class="nav-item" onclick="showView('cibles')">🎯 Cibles Prioritaires <span class="badge" id="badge-cibles">0</span></div>
-      <div class="nav-item" onclick="showView('missions')">📜 Missions <span class="badge" id="badge-missions">0</span></div>
-      <div class="nav-item" onclick="showView('codex')">📖 Codex</div>
-      <div class="nav-item" onclick="showView('historique')">🕰 Historique</div>
-      <div class="nav-item" id="nav-admin" style="display:none" onclick="showView('admin')">🛡 Administration</div>
-      <div class="nav-sep">⚫ Accès Restreint</div>
-      <div class="nav-item secret" id="nav-sphere" onclick="handleSphereClick()">💀 Sphère Secrète</div>
+      <div class="nav-item active" onclick="showView('dashboard')"><span class="nav-icon">🏛</span>Tableau de Bord</div>
+      <div class="nav-item" onclick="showView('registre')"><span class="nav-icon">⚔</span>Registre <span class="nav-badge" id="badge-registre">0</span></div>
+      <div class="nav-item" onclick="showView('cibles')"><span class="nav-icon">🎯</span>Cibles Prioritaires <span class="nav-badge" id="badge-cibles">0</span></div>
+      <div class="nav-item" onclick="showView('missions')"><span class="nav-icon">📋</span>Missions <span class="nav-badge" id="badge-missions">0</span></div>
+      <div class="nav-item" onclick="showView('codex')"><span class="nav-icon">📖</span>Codex</div>
+      <div class="nav-item" onclick="showView('historique')"><span class="nav-icon">🕰</span>Historique</div>
+      <div class="nav-item" id="nav-admin" style="display:none" onclick="showView('admin')"><span class="nav-icon">🛡</span>Administration</div>
+      <div class="nav-sep">Accès Restreint</div>
+      <div class="nav-item secret" id="nav-sphere" onclick="handleSphereClick()"><span class="nav-icon">⬛</span>Sphère Secrète</div>
     </div>
-    <div class="sidebar-bottom">
-      <div class="sidebar-role" id="sidebar-role">◈ Lecture seule</div>
-      <hr class="divider" style="margin:0.3rem 0">
-      <button class="btn btn-sm" onclick="showLoginModal()" id="btn-login">🔑 Connexion</button>
-      <button class="btn btn-sm btn-blood" onclick="logout()" id="btn-logout" style="display:none">Quitter</button>
-      <div class="music-bar">
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="sidebar-user">◈ Lecture seule</div>
+      <hr class="divider" style="margin:0.2rem 0">
+      <button class="btn btn-sm" id="btn-login" onclick="showLoginModal()">🔑 Connexion</button>
+      <button class="btn btn-sm btn-red" id="btn-logout" style="display:none" onclick="logout()">Déconnexion</button>
+      <div class="music-row">
         <span>♪</span>
-        <button onclick="toggleMusic()" id="btn-music">▶</button>
-        <button onclick="nextTrack()">⏭</button>
+        <button id="btn-music" onclick="toggleMusic()" title="Musique">▶</button>
+        <button onclick="nextTrack()" title="Suivant">⏭</button>
       </div>
     </div>
   </nav>
 
-  <!-- MAIN -->
   <div id="main">
     <div class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-icon" id="topbar-icon">🏴</span>
-        <h1 id="topbar-title">Archives Démoniaques</h1>
-      </div>
-      <div class="topbar-actions">
-        <span class="mode-badge" id="mode-badge">◈ Lecture</span>
-        <span class="topbar-divider">·</span>
-        <span class="mode-badge editor" id="mode-badge2" style="display:none">✦ Éditeur</span>
+      <span class="topbar-icon" id="topbar-icon">🏛</span>
+      <h1 id="topbar-title">Archives des Pourfendeurs</h1>
+      <div class="topbar-right">
+        <span class="badge-mode" id="mode-badge">◈ Lecture</span>
+        <span class="badge-mode editor" id="mode-badge2" style="display:none">✦ Éditeur</span>
       </div>
     </div>
 
@@ -520,37 +458,37 @@
 
       <!-- DASHBOARD -->
       <div class="view active" id="view-dashboard">
-        <div class="dashboard-hero">
-          <div class="hero-emblem">🩸</div>
-          <div class="hero-title">CODEX OBSCURA</div>
-          <div class="hero-sub">Registre Suprême de l'Ordre Démoniaque</div>
-          <div class="hero-line"></div>
+        <div class="dash-hero">
+          <div class="dash-hero-sword">⚔</div>
+          <div class="dash-hero-title">CODEX OBSCURA</div>
+          <div class="dash-hero-sub">Registre Suprême de l'Ordre des Pourfendeurs</div>
+          <div class="dash-hero-line"></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🩸</div><div class="stat-num" id="stat-demons">0</div><div class="stat-label">Démons</div></div>
-          <div class="stat-card"><div class="stat-icon">👑</div><div class="stat-num" id="stat-ls">0</div><div class="stat-label">LS Actifs</div></div>
-          <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-num" id="stat-service">0</div><div class="stat-label">En Service</div></div>
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-num" id="stat-cibles">0</div><div class="stat-label">Cibles Désignées</div></div>
-          <div class="stat-card"><div class="stat-icon">📜</div><div class="stat-num" id="stat-missions">0</div><div class="stat-label">Missions Actives</div></div>
-          <div class="stat-card"><div class="stat-icon">💀</div><div class="stat-num" id="stat-tombes">0</div><div class="stat-label">Déchus</div></div>
+          <div class="stat-card"><div class="stat-icon">⚔</div><div class="stat-num" id="stat-pourf">0</div><div class="stat-label">Pourfendeurs</div></div>
+          <div class="stat-card"><div class="stat-icon">👑</div><div class="stat-num" id="stat-piliers">0</div><div class="stat-label">Piliers actifs</div></div>
+          <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-num" id="stat-service">0</div><div class="stat-label">En service</div></div>
+          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-num" id="stat-cibles">0</div><div class="stat-label">Cibles</div></div>
+          <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-num" id="stat-missions">0</div><div class="stat-label">Missions actives</div></div>
+          <div class="stat-card"><div class="stat-icon">✝</div><div class="stat-num" id="stat-tombes">0</div><div class="stat-label">Tombés</div></div>
         </div>
       </div>
 
       <!-- REGISTRE -->
       <div class="view" id="view-registre">
         <div class="section-header">
-          <h2>🩸 Registre des Démons</h2>
-          <button class="btn btn-blood btn-sm editor-only" onclick="openModal('modal-demon')" style="display:none">+ Enregistrer</button>
+          <h2>⚔ Registre des Pourfendeurs</h2>
+          <button class="btn btn-blue btn-sm editor-only" style="display:none" onclick="openModal('modal-pourf')">+ Ajouter</button>
         </div>
         <div class="filter-tabs">
           <button class="filter-tab active" onclick="filterRegistre('all',this)">Tous</button>
-          <button class="filter-tab" onclick="filterRegistre('alive',this)">🔥 En service</button>
-          <button class="filter-tab" onclick="filterRegistre('dead',this)">💀 Décédés</button>
-          <button class="filter-tab" onclick="filterRegistre('dechu',this)">🌑 Déchus</button>
+          <button class="filter-tab" onclick="filterRegistre('alive',this)">● En service</button>
+          <button class="filter-tab" onclick="filterRegistre('dead',this)">✝ Décédés</button>
+          <button class="filter-tab" onclick="filterRegistre('retired',this)">◈ Retraités</button>
         </div>
         <div class="search-bar">
-          <span style="color:#442222">🔍</span>
-          <input type="text" placeholder="Rechercher un démon…" oninput="searchRegistre(this.value)">
+          <span style="color:var(--text2);font-size:0.8rem">⌕</span>
+          <input type="text" placeholder="Rechercher un pourfendeur…" oninput="searchRegistre(this.value)">
         </div>
         <div class="cards-grid fade-in" id="registre-list"></div>
       </div>
@@ -559,7 +497,7 @@
       <div class="view" id="view-cibles">
         <div class="section-header">
           <h2>🎯 Cibles Prioritaires</h2>
-          <button class="btn btn-blood btn-sm editor-only" onclick="openModal('modal-cible')" style="display:none">+ Désigner</button>
+          <button class="btn btn-red btn-sm editor-only" style="display:none" onclick="openModal('modal-cible')">+ Désigner</button>
         </div>
         <div class="cards-grid fade-in" id="cibles-list"></div>
       </div>
@@ -567,28 +505,28 @@
       <!-- MISSIONS -->
       <div class="view" id="view-missions">
         <div class="section-header">
-          <h2>📜 Tableau des Missions</h2>
-          <button class="btn btn-blood btn-sm editor-only" onclick="openModal('modal-mission')" style="display:none">+ Nouvelle Mission</button>
+          <h2>📋 Tableau des Missions</h2>
+          <button class="btn btn-blue btn-sm editor-only" style="display:none" onclick="openModal('modal-mission')">+ Nouvelle Mission</button>
         </div>
         <div class="missions-board fade-in">
-          <div class="mission-col"><div class="col-header">⏳ En Attente</div><div id="missions-attente"></div></div>
-          <div class="mission-col"><div class="col-header">🔥 En Cours</div><div id="missions-encours"></div></div>
-          <div class="mission-col"><div class="col-header">✓ Terminées</div><div id="missions-terminees"></div></div>
-          <div class="mission-col"><div class="col-header">💀 Échec</div><div id="missions-echec"></div></div>
+          <div class="mission-col"><div class="col-title">⏳ En attente</div><div id="missions-attente"></div></div>
+          <div class="mission-col"><div class="col-title">⚔ En cours</div><div id="missions-encours"></div></div>
+          <div class="mission-col"><div class="col-title">✓ Terminées</div><div id="missions-terminees"></div></div>
+          <div class="mission-col"><div class="col-title">✗ Échec</div><div id="missions-echec"></div></div>
         </div>
       </div>
 
       <!-- CODEX -->
       <div class="view" id="view-codex">
-        <div class="section-header"><h2>📖 Codex Démoniaque</h2></div>
-        <p style="font-size:0.76rem; color:#553333; font-style:italic; margin-bottom:1.2rem">Connaissance interdite — Réservée aux initiés de sang</p>
+        <div class="section-header"><h2>📖 Codex de l'Ordre</h2></div>
+        <p style="font-size:0.72rem;color:var(--text2);font-style:italic;margin-bottom:1.1rem">Connaissance réservée aux initiés de l'Ordre</p>
         <div id="codex-sections"></div>
       </div>
 
       <!-- HISTORIQUE -->
       <div class="view" id="view-historique">
         <div class="section-header"><h2>🕰 Historique</h2></div>
-        <div class="filter-tabs" style="margin-bottom:1rem">
+        <div class="filter-tabs">
           <button class="filter-tab active" onclick="filterHistorique('all',this)">Tout</button>
           <button class="filter-tab" onclick="filterHistorique('add',this)">Ajouts</button>
           <button class="filter-tab" onclick="filterHistorique('edit',this)">Éditions</button>
@@ -596,39 +534,39 @@
         </div>
         <div style="overflow-x:auto">
           <table class="history-table">
-            <thead><tr><th>Action</th><th>Cible</th><th>Détail</th><th>Par</th><th>Date</th></tr></thead>
+            <thead><tr><th>Action</th><th>Catégorie</th><th>Détail</th><th>Par</th><th>Date</th></tr></thead>
             <tbody id="historique-body"></tbody>
           </table>
         </div>
-        <div id="historique-empty" class="empty-state" style="display:none"><span class="empty-icon">🕰</span>Aucune entrée.</div>
+        <div id="historique-empty" class="empty-state" style="display:none"><span class="empty-icon">🕰</span>Aucune entrée dans le journal.</div>
       </div>
 
       <!-- ADMIN -->
       <div class="view" id="view-admin">
         <div class="section-header"><h2>🛡 Administration</h2></div>
-        <div class="admin-section">
+        <div class="admin-box">
           <h3>🔐 Liste Blanche Steam</h3>
           <div id="whitelist-list"></div>
           <hr class="divider">
-          <button class="btn btn-gold btn-sm" onclick="openModal('modal-adduser')">➕ Ajouter un Éditeur</button>
+          <button class="btn btn-blue btn-sm" onclick="openModal('modal-adduser')">➕ Ajouter un éditeur</button>
         </div>
       </div>
 
-      <!-- SPHERE -->
+      <!-- SPHÈRE -->
       <div class="view" id="view-sphere">
-        <div class="secret-header">
-          <h2>💀 Sphère Secrète</h2>
-          <p>Opérations classifiées — Accès restreint au sang autorisé</p>
+        <div class="secret-top">
+          <h2>⬛ Sphère Secrète</h2>
+          <p>Opérations classifiées — Accès restreint au personnel autorisé</p>
         </div>
-        <div class="section-header"><h2 style="color:var(--purple2)">Règles d'Opération</h2></div>
+        <div class="section-header"><h2 style="color:#9a6aee;font-weight:normal">Règles d'Opération</h2></div>
         <div id="rules-list"></div>
         <hr class="divider">
         <div class="section-header">
-          <h2 style="color:var(--purple2)">Opérations Secrètes</h2>
-          <button class="btn btn-sm editor-only" style="border-color:var(--purple);color:var(--purple2);display:none" onclick="openModal('modal-op')">+ Nouvelle Opération</button>
+          <h2 style="color:#9a6aee;font-weight:normal">Opérations Secrètes</h2>
+          <button class="btn btn-sm editor-only" style="border-color:#4a3080;color:#9a6aee;display:none" onclick="openModal('modal-op')">+ Nouvelle Opération</button>
         </div>
         <div id="ops-list"></div>
-        <p style="font-size:0.62rem;color:#2a1a3a;text-align:center;margin-top:2rem">💀 Ces lois sont gravées dans le sang. Toute violation est punie de mort. 💀</p>
+        <p style="font-size:0.6rem;color:#201830;text-align:center;margin-top:2rem">⬛ Ces règles sont gravées dans la pierre. Leur violation entraîne la mort sans procès. ⬛</p>
       </div>
 
     </div>
@@ -639,34 +577,34 @@
 
 <!-- LOGIN -->
 <div class="modal-overlay hidden" id="modal-login">
-  <div class="modal" style="max-width:400px">
+  <div class="modal" style="max-width:390px">
     <button class="modal-close" onclick="closeModal('modal-login')">✕</button>
     <div class="login-step active" id="login-step-1">
-      <div class="modal-title">🔑 Connexion — Accès Éditeur</div>
-      <div class="login-info">Entrez votre <strong>Steam ID 64</strong> (commence par <strong>7656119…</strong>).<br>Trouvez-le sur <em>steamid.io</em></div>
+      <div class="modal-title">🔑 Connexion Éditeur</div>
+      <div class="login-info">Entrez votre <strong>Steam ID 64</strong> pour accéder aux fonctions d'édition.<br>Votre ID commence par <strong>7656119…</strong> — trouvez-le sur <em>steamid.io</em></div>
       <div class="form-group"><label>Steam ID 64</label><input type="text" id="input-steamid" placeholder="76561198…" maxlength="17"></div>
       <div class="form-actions">
         <button class="btn" onclick="closeModal('modal-login')">Annuler</button>
-        <button class="btn btn-blood" onclick="loginStep2()">Continuer →</button>
+        <button class="btn btn-blue" onclick="loginStep2()">Continuer →</button>
       </div>
     </div>
     <div class="login-step" id="login-step-2">
       <div class="modal-title">Première Connexion</div>
-      <div class="login-info">Choisissez votre <strong>code secret</strong>. Conservez-le précieusement.</div>
+      <div class="login-info">Choisissez un <strong>code secret</strong> personnel. Conservez-le précieusement.</div>
       <div class="form-group"><label>Nouveau code secret</label><input type="password" id="input-code-new" placeholder="••••••"></div>
-      <div class="form-group"><label>Confirmer</label><input type="password" id="input-code-confirm" placeholder="••••••"></div>
+      <div class="form-group"><label>Confirmer le code</label><input type="password" id="input-code-confirm" placeholder="••••••"></div>
       <div class="form-actions">
         <button class="btn" onclick="goLoginStep(1)">← Retour</button>
-        <button class="btn btn-blood" onclick="setFirstCode()">Valider ✓</button>
+        <button class="btn btn-blue" onclick="setFirstCode()">Valider ✓</button>
       </div>
     </div>
     <div class="login-step" id="login-step-3">
       <div class="modal-title">Code Secret</div>
-      <div class="login-info">Entrez votre <strong>code secret</strong> pour accéder aux archives.</div>
+      <div class="login-info">Entrez votre <strong>code secret</strong> pour accéder à l'édition.</div>
       <div class="form-group"><label>Code secret</label><input type="password" id="input-code" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <div class="form-actions">
         <button class="btn" onclick="goLoginStep(1)">← Retour</button>
-        <button class="btn btn-blood" onclick="doLogin()">Accéder 🩸</button>
+        <button class="btn btn-blue" onclick="doLogin()">Accéder ⚔</button>
       </div>
     </div>
   </div>
@@ -674,70 +612,73 @@
 
 <!-- CREDS -->
 <div class="modal-overlay hidden" id="modal-creds">
-  <div class="modal" style="max-width:400px">
+  <div class="modal" style="max-width:390px">
     <button class="modal-close" onclick="closeModal('modal-creds')">✕</button>
-    <div class="modal-title">🔑 Mes Identifiants</div>
-    <p style="font-size:0.76rem;color:#664444;margin-bottom:1rem">Conservez ces informations pour vous connecter depuis un autre appareil.</p>
+    <div class="modal-title">🔑 Mes identifiants</div>
+    <p style="font-size:0.73rem;color:var(--text2);margin-bottom:0.9rem">Conservez ces informations pour vous connecter depuis un autre appareil.</p>
     <div class="creds-box">
-      <div class="creds-row"><span class="creds-label">Steam ID 64</span><span class="creds-val" id="creds-steamid">—</span><button class="creds-copy" onclick="copyText('creds-steamid')">Copier</button></div>
-      <div class="creds-row"><span class="creds-label">Code Secret</span><span class="creds-val" id="creds-code">••••••</span><button class="creds-copy" onclick="toggleCredsCode()">Afficher</button></div>
+      <div class="creds-row"><span class="creds-lbl">Steam ID 64</span><span class="creds-val" id="creds-steamid">—</span><button class="creds-copy" onclick="copyText('creds-steamid')">Copier</button></div>
+      <div class="creds-row"><span class="creds-lbl">Code secret</span><span class="creds-val" id="creds-code">••••••</span><button class="creds-copy" onclick="toggleCredsCode()">Afficher</button></div>
     </div>
-    <div class="warning-box">⚠ Ne partagez jamais votre code secret.</div>
+    <div class="warn-box">⚠ Ne partagez jamais votre code secret.</div>
   </div>
 </div>
 
-<!-- DEMON / REGISTRE -->
-<div class="modal-overlay hidden" id="modal-demon">
+<!-- POURFENDEUR -->
+<div class="modal-overlay hidden" id="modal-pourf">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-demon')">✕</button>
-    <div class="modal-title" id="modal-demon-title">🩸 Nouvelle Fiche Démoniaque</div>
-    <div class="form-group"><label>Nom du Démon</label><input type="text" id="demon-nom" placeholder="Nom complet"></div>
+    <button class="modal-close" onclick="closeModal('modal-pourf')">✕</button>
+    <div class="modal-title" id="modal-pourf-title">⚔ Nouvelle Fiche de Service</div>
+    <div class="form-group"><label>Nom du Pourfendeur</label><input type="text" id="pourf-nom" placeholder="Nom complet"></div>
     <div class="form-group">
       <label>Rang</label>
-      <select id="demon-rang">
-        <option>Seigneur Suprême</option>
-        <option>Conseiller du Seigneur</option>
-        <option>LS — Lune Supérieure</option>
-        <option>LI — Lune Inférieure</option>
-        <option>Rang Intermédiaire I</option>
-        <option>Rang Intermédiaire II</option>
-        <option>Rang Intermédiaire III</option>
-        <option>Rang Bas I</option>
-        <option>Rang Bas II</option>
-        <option>Rang Bas III</option>
-        <option>Rang Bas IV</option>
-        <option>Rang Bas V</option>
-        <option>Rang Bas VI</option>
+      <select id="pourf-rang">
+        <option>Maître des Pourfendeurs</option>
+        <option>Conseiller du Maître</option>
+        <option>Pilier — Hashira</option>
+        <option>Kinoe — Rang 1</option>
+        <option>Kinoto — Rang 2</option>
+        <option>Hinoe — Rang 3</option>
+        <option>Hinoto — Rang 4</option>
+        <option>Tsuchinoe — Rang 5</option>
+        <option>Tsuchinoto — Rang 6</option>
+        <option>Kanoe — Rang 7</option>
+        <option>Kanoto — Rang 8</option>
+        <option>Mizunoe — Rang 9</option>
+        <option>Mizunoto — Rang 10</option>
       </select>
     </div>
     <div class="form-group">
-      <label>Pouvoir Sanguinaire</label>
-      <select id="demon-pouvoir">
-        <option>Art du Sang — Manipulation</option>
-        <option>Art du Sang — Illusion</option>
-        <option>Art du Sang — Régénération</option>
-        <option>Art du Sang — Transformation</option>
-        <option>Art du Sang — Destruction</option>
-        <option>Art du Sang — Absorption</option>
-        <option>Art du Sang — Invocation</option>
-        <option>Pouvoir Originel / Unique</option>
+      <label>Souffle</label>
+      <select id="pourf-souffle">
+        <option>Souffle de l'Eau</option>
+        <option>Souffle de la Flamme</option>
+        <option>Souffle de la Foudre</option>
+        <option>Souffle de la Fleur</option>
+        <option>Souffle de la Roche</option>
+        <option>Souffle de la Brume</option>
+        <option>Souffle du Son</option>
+        <option>Souffle du Vent</option>
+        <option>Souffle de l'Insecte</option>
+        <option>Souffle du Serpent</option>
+        <option>Autre / Dérivé</option>
       </select>
     </div>
     <div class="form-group">
       <label>Statut</label>
-      <select id="demon-statut">
-        <option value="alive">🔥 En service</option>
-        <option value="dead">💀 Décédé</option>
-        <option value="dechu">🌑 Déchu</option>
+      <select id="pourf-statut">
+        <option value="alive">En service</option>
+        <option value="dead">Décédé</option>
+        <option value="retired">Retraité</option>
       </select>
     </div>
-    <div class="form-group"><label>Jours de service</label><input type="number" id="demon-jours" placeholder="0" min="0"></div>
-    <div class="form-group"><label>Clan / Meute</label><input type="text" id="demon-clan" placeholder="Nom du clan"></div>
-    <div class="form-group"><label>Observations</label><textarea id="demon-obs" placeholder="Notes, observations…"></textarea></div>
-    <input type="hidden" id="demon-id">
+    <div class="form-group"><label>Jours de service</label><input type="number" id="pourf-jours" placeholder="0" min="0"></div>
+    <div class="form-group"><label>Brigade / Unité</label><input type="text" id="pourf-brigade" placeholder="Nom de l'unité"></div>
+    <div class="form-group"><label>Observations</label><textarea id="pourf-obs" placeholder="Notes, observations…"></textarea></div>
+    <input type="hidden" id="pourf-id">
     <div class="form-actions">
-      <button class="btn" onclick="closeModal('modal-demon')">Annuler</button>
-      <button class="btn btn-blood" onclick="saveDemon()">Sceller la Fiche 🩸</button>
+      <button class="btn" onclick="closeModal('modal-pourf')">Annuler</button>
+      <button class="btn btn-blue" onclick="savePourf()">Sceller la Fiche ⚔</button>
     </div>
   </div>
 </div>
@@ -746,31 +687,30 @@
 <div class="modal-overlay hidden" id="modal-cible">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-cible')">✕</button>
-    <div class="modal-title">🎯 Nouvel Avis de Recherche</div>
+    <div class="modal-title">🎯 Avis de Recherche</div>
     <div class="form-group"><label>Prénom</label><input type="text" id="cible-prenom" placeholder="Prénom"></div>
     <div class="form-group"><label>Nom</label><input type="text" id="cible-nom" placeholder="Nom"></div>
     <div class="form-group">
       <label>Rang de la Cible</label>
       <select id="cible-rang" onchange="updatePriority()">
         <option value="">Sélectionnez</option>
-        <option value="1">Seigneur Suprême</option>
-        <option value="1">Conseiller du Seigneur</option>
-        <option value="1">LS — Lune Supérieure</option>
-        <option value="2">LI — Lune Inférieure</option>
-        <option value="2">Rang Intermédiaire</option>
-        <option value="3">Rang Bas</option>
+        <option value="1">Lune Supérieure 1-3</option>
+        <option value="1">Muzan Kibutsuji</option>
+        <option value="2">Lune Supérieure 4-6</option>
+        <option value="2">Lune Inférieure 1-3</option>
+        <option value="3">Lune Inférieure 4-6</option>
+        <option value="3">Démon ordinaire</option>
       </select>
     </div>
     <div class="form-group">
-      <label>Niveau de Priorité (auto)</label>
-      <input type="text" id="cible-priorite-display" readonly style="color:var(--blood2)">
+      <label>Niveau de priorité (auto)</label>
+      <input type="text" id="cible-priorite-display" readonly style="color:var(--blue2)">
       <input type="hidden" id="cible-priorite">
     </div>
-    <div class="form-group"><label>Motif de Recherche</label><textarea id="cible-motif" placeholder="Motif de la désignation…"></textarea></div>
-    <input type="hidden" id="cible-id">
+    <div class="form-group"><label>Motif</label><textarea id="cible-motif" placeholder="Motif de la désignation…"></textarea></div>
     <div class="form-actions">
       <button class="btn" onclick="closeModal('modal-cible')">Annuler</button>
-      <button class="btn btn-blood" onclick="saveCible()">Émettre l'Avis 🎯</button>
+      <button class="btn btn-red" onclick="saveCible()">Émettre l'Avis</button>
     </div>
   </div>
 </div>
@@ -779,31 +719,20 @@
 <div class="modal-overlay hidden" id="modal-mission">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-mission')">✕</button>
-    <div class="modal-title" id="modal-mission-title">📜 Nouvelle Mission</div>
+    <div class="modal-title" id="modal-mission-title">📋 Nouvelle Mission</div>
     <div class="form-group"><label>Titre</label><input type="text" id="mission-titre" placeholder="Intitulé de la mission"></div>
-    <div class="form-group">
-      <label>Priorité</label>
-      <select id="mission-priorite">
-        <option value="haute">🔥 Haute — Urgente</option>
-        <option value="normale" selected>Normale</option>
-        <option value="basse">Basse</option>
-      </select>
+    <div class="form-group"><label>Priorité</label>
+      <select id="mission-priorite"><option value="haute">Haute — Urgente</option><option value="normale" selected>Normale</option><option value="basse">Basse</option></select>
     </div>
-    <div class="form-group">
-      <label>Statut</label>
-      <select id="mission-statut">
-        <option value="attente">En Attente</option>
-        <option value="encours">En Cours</option>
-        <option value="terminee">Terminée</option>
-        <option value="echec">Échec</option>
-      </select>
+    <div class="form-group"><label>Statut</label>
+      <select id="mission-statut"><option value="attente">En Attente</option><option value="encours">En Cours</option><option value="terminee">Terminée</option><option value="echec">Échec</option></select>
     </div>
-    <div class="form-group"><label>Membres Assignés</label><input type="text" id="mission-membres" placeholder="Noms séparés par virgules…"></div>
+    <div class="form-group"><label>Membres assignés</label><input type="text" id="mission-membres" placeholder="Noms séparés par virgules…"></div>
     <div class="form-group"><label>Description</label><textarea id="mission-desc" placeholder="Détails de la mission…"></textarea></div>
     <input type="hidden" id="mission-id">
     <div class="form-actions">
       <button class="btn" onclick="closeModal('modal-mission')">Annuler</button>
-      <button class="btn btn-blood" onclick="saveMission()">Enregistrer 📜</button>
+      <button class="btn btn-blue" onclick="saveMission()">Enregistrer</button>
     </div>
   </div>
 </div>
@@ -812,7 +741,7 @@
 <div class="modal-overlay hidden" id="modal-op">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-op')">✕</button>
-    <div class="modal-title">💀 Nouvelle Opération</div>
+    <div class="modal-title">⬛ Nouvelle Opération</div>
     <div class="form-group"><label>Type</label>
       <select id="op-type"><option>Élimination</option><option>Torture / Interrogatoire</option><option>Surveillance</option><option>Infiltration</option><option>Capture</option><option>Autre</option></select>
     </div>
@@ -828,7 +757,7 @@
     <input type="hidden" id="op-id">
     <div class="form-actions">
       <button class="btn" onclick="closeModal('modal-op')">Annuler</button>
-      <button class="btn" style="border-color:var(--purple);color:var(--purple2)" onclick="saveOp()">Sceller 💀</button>
+      <button class="btn" style="border-color:#4a3080;color:#9a6aee" onclick="saveOp()">Sceller ⬛</button>
     </div>
   </div>
 </div>
@@ -837,22 +766,21 @@
 <div class="modal-overlay hidden" id="modal-adduser">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-adduser')">✕</button>
-    <div class="modal-title">➕ Ajouter un Éditeur</div>
+    <div class="modal-title">➕ Ajouter un éditeur</div>
     <div class="form-group"><label>Steam ID 64</label><input type="text" id="user-steamid" placeholder="76561198…"></div>
     <div class="form-group"><label>Nom affiché</label><input type="text" id="user-nom" placeholder="Nom ou pseudo"></div>
-    <div class="form-group">
-      <label>Rôles</label>
+    <div class="form-group"><label>Rôles</label>
       <div>
-        <label class="checkbox-label"><input type="checkbox" id="role-veilleur"><div><div>Veilleur</div><div class="checkbox-desc">Registre, cibles, missions</div></div></label>
-        <label class="checkbox-label"><input type="checkbox" id="role-sphere"><div><div>Sphère Secrète</div><div class="checkbox-desc">Opérations secrètes</div></div></label>
-        <label class="checkbox-label"><input type="checkbox" id="role-adminsphere"><div><div>Admin Sphère</div><div class="checkbox-desc">Historique + gestion</div></div></label>
-        <label class="checkbox-label"><input type="checkbox" id="role-admin"><div><div>Admin</div><div class="checkbox-desc">Accès complet</div></div></label>
+        <label class="cb-label"><input type="checkbox" id="role-veilleur"><div><div>Veilleur</div><div class="cb-desc">Registre, cibles, missions</div></div></label>
+        <label class="cb-label"><input type="checkbox" id="role-sphere"><div><div>Sphère Secrète</div><div class="cb-desc">Opérations secrètes</div></div></label>
+        <label class="cb-label"><input type="checkbox" id="role-adminsphere"><div><div>Admin Sphère</div><div class="cb-desc">Historique + gestion</div></div></label>
+        <label class="cb-label"><input type="checkbox" id="role-admin"><div><div>Admin</div><div class="cb-desc">Accès complet</div></div></label>
       </div>
     </div>
     <p class="form-hint">La personne choisira son code secret lors de sa première connexion.</p>
     <div class="form-actions">
       <button class="btn" onclick="closeModal('modal-adduser')">Annuler</button>
-      <button class="btn btn-gold" onclick="addUser()">+ Ajouter</button>
+      <button class="btn btn-blue" onclick="addUser()">+ Ajouter</button>
     </div>
   </div>
 </div>
@@ -866,7 +794,7 @@
     <input type="hidden" id="roles-target-id">
     <div class="form-actions">
       <button class="btn" onclick="closeModal('modal-roles')">Annuler</button>
-      <button class="btn btn-gold" onclick="saveRoles()">✔ Confirmer</button>
+      <button class="btn btn-blue" onclick="saveRoles()">✔ Confirmer</button>
     </div>
   </div>
 </div>
@@ -893,591 +821,529 @@ const db = getDatabase(app);
 
 let state = {
   user: null,
-  registre: {}, cibles: {}, missions: {}, ops: {}, whitelist: {}, historique: [],
-  registreFilter: 'all', registreSearch: '', historiqueFilter: 'all',
-  editingDemonId: null, editingMissionId: null, editingOpId: null,
+  registre:{}, cibles:{}, missions:{}, ops:{}, whitelist:{}, historique:[],
+  registreFilter:'all', registreSearch:'', historiqueFilter:'all',
+  editingPourId:null, editingMissionId:null, editingOpId:null,
 };
-
-// SPLASH PARTICLES
-const pc = document.getElementById('particles');
-for (let i = 0; i < 25; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.style.cssText = `left:${Math.random()*100}%;width:${1+Math.random()*3}px;height:${1+Math.random()*3}px;animation-duration:${4+Math.random()*8}s;animation-delay:${Math.random()*6}s`;
-  pc.appendChild(p);
-}
 
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('codex_session');
-  if (saved) { try { state.user = JSON.parse(saved); } catch(e) {} }
-
-  onValue(ref(db,'registre'), s => { state.registre = s.val()||{}; renderRegistre(); updateStats(); });
-  onValue(ref(db,'cibles'), s => { state.cibles = s.val()||{}; renderCibles(); updateStats(); });
-  onValue(ref(db,'missions'), s => { state.missions = s.val()||{}; renderMissions(); updateStats(); });
-  onValue(ref(db,'ops'), s => { state.ops = s.val()||{}; renderOps(); });
-  onValue(ref(db,'whitelist'), s => { state.whitelist = s.val()||{}; renderWhitelist(); });
+  if (saved) { try { state.user = JSON.parse(saved); } catch(e){} }
+  onValue(ref(db,'registre'), s => { state.registre=s.val()||{}; renderRegistre(); updateStats(); });
+  onValue(ref(db,'cibles'), s => { state.cibles=s.val()||{}; renderCibles(); updateStats(); });
+  onValue(ref(db,'missions'), s => { state.missions=s.val()||{}; renderMissions(); updateStats(); });
+  onValue(ref(db,'ops'), s => { state.ops=s.val()||{}; renderOps(); });
+  onValue(ref(db,'whitelist'), s => { state.whitelist=s.val()||{}; renderWhitelist(); });
   onValue(ref(db,'historique'), s => {
-    const raw = s.val()||{};
-    state.historique = Object.entries(raw).map(([k,v])=>({...v,_key:k})).sort((a,b)=>b.ts-a.ts);
+    const raw=s.val()||{};
+    state.historique=Object.entries(raw).map(([k,v])=>({...v,_key:k})).sort((a,b)=>b.ts-a.ts);
     renderHistorique();
   });
-
   updateUI(); renderCodex(); renderRules();
 });
 
 document.getElementById('splash').addEventListener('click', () => {
   document.getElementById('splash').classList.add('hide');
-  document.getElementById('app').style.display = 'flex';
-  setTimeout(() => document.getElementById('splash').remove(), 1100);
+  document.getElementById('app').style.display='flex';
+  setTimeout(()=>document.getElementById('splash').remove(), 1100);
 });
 
 const VIEWS = {
-  dashboard: ['🏴','Archives Démoniaques'],
-  registre: ['🩸','Registre des Démons'],
-  cibles: ['🎯','Cibles Prioritaires'],
-  missions: ['📜','Tableau des Missions'],
-  codex: ['📖','Codex Démoniaque'],
-  historique: ['🕰','Historique'],
-  admin: ['🛡','Administration'],
-  sphere: ['💀','Sphère Secrète'],
+  dashboard:['🏛','Archives des Pourfendeurs'],
+  registre:['⚔','Registre des Pourfendeurs'],
+  cibles:['🎯','Cibles Prioritaires'],
+  missions:['📋','Tableau des Missions'],
+  codex:['📖','Codex de l\'Ordre'],
+  historique:['🕰','Historique'],
+  admin:['🛡','Administration'],
+  sphere:['⬛','Sphère Secrète'],
 };
 
-window.showView = (v) => {
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+window.showView = v => {
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(el => {
-    if (el.getAttribute('onclick')?.includes("'"+v+"'")) el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>{
+    if(el.getAttribute('onclick')?.includes("'"+v+"'")) el.classList.add('active');
   });
-  const [icon, title] = VIEWS[v] || ['🩸','Archives'];
-  document.getElementById('topbar-icon').textContent = icon;
-  document.getElementById('topbar-title').textContent = title;
+  const [icon,title]=VIEWS[v]||['⚔','Archives'];
+  document.getElementById('topbar-icon').textContent=icon;
+  document.getElementById('topbar-title').textContent=title;
 };
 
 // AUTH
-window.showLoginModal = () => { goLoginStep(1); openModal('modal-login'); };
-window.goLoginStep = (n) => {
-  document.querySelectorAll('.login-step').forEach(el => el.classList.remove('active'));
-  document.getElementById('login-step-'+n).classList.add('active');
+window.showLoginModal=()=>{ goLoginStep(1); openModal('modal-login'); };
+window.goLoginStep=n=>{ document.querySelectorAll('.login-step').forEach(el=>el.classList.remove('active')); document.getElementById('login-step-'+n).classList.add('active'); };
+window.loginStep2=async()=>{
+  const steamId=document.getElementById('input-steamid').value.trim();
+  if(!steamId.match(/^[0-9]{17}$/)){toast('Steam ID invalide (17 chiffres)','error');return;}
+  const snap=await get(ref(db,'whitelist/'+steamId));
+  if(!snap.exists()){toast('Steam ID non autorisé','error');return;}
+  const data=snap.val();
+  state._pendingUser={steamId,...data};
+  if(!data.code) goLoginStep(2); else goLoginStep(3);
 };
-window.loginStep2 = async () => {
-  const steamId = document.getElementById('input-steamid').value.trim();
-  if (!steamId.match(/^[0-9]{17}$/)) { toast('Steam ID invalide (17 chiffres)', 'error'); return; }
-  const snap = await get(ref(db,'whitelist/'+steamId));
-  if (!snap.exists()) { toast('Steam ID non autorisé', 'error'); return; }
-  const data = snap.val();
-  state._pendingUser = { steamId, ...data };
-  if (!data.code) goLoginStep(2); else goLoginStep(3);
-};
-window.setFirstCode = async () => {
-  const code = document.getElementById('input-code-new').value;
-  const confirm = document.getElementById('input-code-confirm').value;
-  if (!code || code.length < 4) { toast('Code trop court (min 4 car.)', 'error'); return; }
-  if (code !== confirm) { toast('Codes différents', 'error'); return; }
-  const u = state._pendingUser;
-  await update(ref(db,'whitelist/'+u.steamId), { code });
-  state.user = { ...u, code };
-  localStorage.setItem('codex_session', JSON.stringify(state.user));
+window.setFirstCode=async()=>{
+  const code=document.getElementById('input-code-new').value;
+  const confirm=document.getElementById('input-code-confirm').value;
+  if(!code||code.length<4){toast('Code trop court (min 4 car.)','error');return;}
+  if(code!==confirm){toast('Codes différents','error');return;}
+  const u=state._pendingUser;
+  await update(ref(db,'whitelist/'+u.steamId),{code});
+  state.user={...u,code};
+  localStorage.setItem('codex_session',JSON.stringify(state.user));
   closeModal('modal-login'); updateUI();
-  toast('Bienvenue, '+u.name+' 🩸', 'success');
+  toast('Bienvenue, '+u.name+' ⚔','success');
 };
-window.doLogin = () => {
-  const code = document.getElementById('input-code').value;
-  if (code !== state._pendingUser.code) { toast('Code incorrect', 'error'); return; }
-  state.user = { ...state._pendingUser };
-  localStorage.setItem('codex_session', JSON.stringify(state.user));
+window.doLogin=()=>{
+  const code=document.getElementById('input-code').value;
+  if(code!==state._pendingUser.code){toast('Code incorrect','error');return;}
+  state.user={...state._pendingUser};
+  localStorage.setItem('codex_session',JSON.stringify(state.user));
   closeModal('modal-login'); updateUI();
-  toast('Accès accordé 🩸', 'success');
+  toast('Accès accordé ⚔','success');
 };
-window.logout = () => {
-  state.user = null; localStorage.removeItem('codex_session');
-  updateUI(); toast('Déconnecté', 'info');
-};
+window.logout=()=>{ state.user=null; localStorage.removeItem('codex_session'); updateUI(); toast('Déconnecté','info'); };
 
-function hasRole(...roles) {
-  if (!state.user) return false;
-  const r = state.user.roles || [];
-  if (r.includes('admin')) return true;
-  return roles.some(role => r.includes(role));
+function hasRole(...roles){
+  if(!state.user) return false;
+  const r=state.user.roles||[];
+  if(r.includes('admin')) return true;
+  return roles.some(role=>r.includes(role));
 }
 
-function updateUI() {
-  const isEditor = !!state.user;
-  const isAdmin = hasRole('admin','adminsphere');
-  const hasSphere = hasRole('sphere','admin');
-  document.getElementById('btn-login').style.display = isEditor ? 'none' : '';
-  document.getElementById('btn-logout').style.display = isEditor ? '' : 'none';
-  document.getElementById('nav-admin').style.display = isAdmin ? '' : 'none';
-  document.getElementById('nav-sphere').classList.toggle('unlocked', hasSphere);
-  document.getElementById('sidebar-role').innerHTML = state.user
-    ? `<span>${state.user.name}</span> — ${(state.user.roles||[]).join(', ')}`
-    : '◈ Lecture seule';
-  const mb = document.getElementById('mode-badge');
-  const mb2 = document.getElementById('mode-badge2');
-  mb.textContent = isEditor ? '✦ Éditeur' : '◈ Lecture';
-  mb.classList.toggle('editor', isEditor);
-  mb2.style.display = isEditor ? '' : 'none';
-  if (isEditor) {
-    mb2.onclick = () => openModal('modal-creds');
-    document.getElementById('creds-steamid').textContent = state.user.steamId;
-  }
-  document.querySelectorAll('.editor-only').forEach(el => el.style.display = isEditor ? '' : 'none');
+function updateUI(){
+  const isEditor=!!state.user;
+  const isAdmin=hasRole('admin','adminsphere');
+  const hasSphere=hasRole('sphere','admin');
+  document.getElementById('btn-login').style.display=isEditor?'none':'';
+  document.getElementById('btn-logout').style.display=isEditor?'':'none';
+  document.getElementById('nav-admin').style.display=isAdmin?'':'none';
+  document.getElementById('nav-sphere').classList.toggle('unlocked',hasSphere);
+  document.getElementById('sidebar-user').innerHTML=state.user?`<span>${state.user.name}</span> — ${(state.user.roles||[]).join(', ')}`:'◈ Lecture seule';
+  const mb=document.getElementById('mode-badge');
+  const mb2=document.getElementById('mode-badge2');
+  mb.textContent=isEditor?'✦ Éditeur':'◈ Lecture';
+  mb.classList.toggle('editor',isEditor);
+  mb2.style.display=isEditor?'':'none';
+  if(isEditor){ mb2.onclick=()=>openModal('modal-creds'); document.getElementById('creds-steamid').textContent=state.user.steamId; }
+  document.querySelectorAll('.editor-only').forEach(el=>el.style.display=isEditor?'':'none');
 }
 
-window.handleSphereClick = () => {
-  if (hasRole('sphere','admin')) showView('sphere');
-  else if (state.user) toast('Accès refusé — Sphère Secrète 💀', 'error');
-  else { toast('Connexion requise', 'info'); showLoginModal(); }
+window.handleSphereClick=()=>{
+  if(hasRole('sphere','admin')) showView('sphere');
+  else if(state.user) toast('Accès refusé — Sphère Secrète','error');
+  else { toast('Connexion requise','info'); showLoginModal(); }
 };
 
-function updateStats() {
-  const r = Object.values(state.registre);
-  document.getElementById('stat-demons').textContent = r.length;
-  document.getElementById('stat-ls').textContent = r.filter(x => x.rang?.includes('LS')).length;
-  document.getElementById('stat-service').textContent = r.filter(x => x.statut === 'alive').length;
-  document.getElementById('stat-cibles').textContent = Object.keys(state.cibles).length;
-  document.getElementById('stat-missions').textContent = Object.values(state.missions).filter(m => m.statut === 'encours').length;
-  document.getElementById('stat-tombes').textContent = r.filter(x => x.statut === 'dead' || x.statut === 'dechu').length;
-  document.getElementById('badge-registre').textContent = r.length;
-  document.getElementById('badge-cibles').textContent = Object.keys(state.cibles).length;
-  document.getElementById('badge-missions').textContent = Object.values(state.missions).filter(m => m.statut === 'encours').length;
+function updateStats(){
+  const r=Object.values(state.registre);
+  document.getElementById('stat-pourf').textContent=r.length;
+  document.getElementById('stat-piliers').textContent=r.filter(x=>x.rang?.includes('Pilier')).length;
+  document.getElementById('stat-service').textContent=r.filter(x=>x.statut==='alive').length;
+  document.getElementById('stat-cibles').textContent=Object.keys(state.cibles).length;
+  document.getElementById('stat-missions').textContent=Object.values(state.missions).filter(m=>m.statut==='encours').length;
+  document.getElementById('stat-tombes').textContent=r.filter(x=>x.statut==='dead').length;
+  document.getElementById('badge-registre').textContent=r.length;
+  document.getElementById('badge-cibles').textContent=Object.keys(state.cibles).length;
+  document.getElementById('badge-missions').textContent=Object.values(state.missions).filter(m=>m.statut==='encours').length;
 }
 
 // REGISTRE
-window.filterRegistre = (f, btn) => {
-  state.registreFilter = f;
-  document.querySelectorAll('#view-registre .filter-tab').forEach(el => el.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+window.filterRegistre=(f,btn)=>{
+  state.registreFilter=f;
+  document.querySelectorAll('#view-registre .filter-tab').forEach(el=>el.classList.remove('active'));
+  if(btn) btn.classList.add('active');
   renderRegistre();
 };
-window.searchRegistre = (q) => { state.registreSearch = q.toLowerCase(); renderRegistre(); };
+window.searchRegistre=q=>{ state.registreSearch=q.toLowerCase(); renderRegistre(); };
 
-function renderRegistre() {
-  const list = document.getElementById('registre-list');
-  let items = Object.entries(state.registre);
-  if (state.registreFilter !== 'all') items = items.filter(([,v]) => v.statut === state.registreFilter);
-  if (state.registreSearch) items = items.filter(([,v]) => v.nom?.toLowerCase().includes(state.registreSearch));
-  if (!items.length) { list.innerHTML = '<div class="empty-state"><span class="empty-icon">🩸</span>Aucun démon enregistré.</div>'; return; }
-  list.innerHTML = items.map(([id, p]) => {
-    const sc = { alive:'status-alive', dead:'status-dead', dechu:'status-dechu' }[p.statut] || 'status-alive';
-    const sl = { alive:'🔥 En service', dead:'💀 Décédé', dechu:'🌑 Déchu' }[p.statut] || p.statut;
-    return `<div class="demon-card">
+function renderRegistre(){
+  const list=document.getElementById('registre-list');
+  let items=Object.entries(state.registre);
+  if(state.registreFilter!=='all') items=items.filter(([,v])=>v.statut===state.registreFilter);
+  if(state.registreSearch) items=items.filter(([,v])=>v.nom?.toLowerCase().includes(state.registreSearch));
+  if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">⚔</span>Aucun pourfendeur enregistré.</div>';return;}
+  list.innerHTML=items.map(([id,p])=>{
+    const sc={alive:'status-alive',dead:'status-dead',retired:'status-retired'}[p.statut]||'status-alive';
+    const sl={alive:'● En service',dead:'✝ Décédé',retired:'◈ Retraité'}[p.statut]||p.statut;
+    return `<div class="member-card">
       <span class="card-status ${sc}">${sl}</span>
       <div class="card-header">
-        <div class="card-avatar">🩸</div>
+        <div class="card-avatar">⚔</div>
         <div>
           <div class="card-name">${p.nom||'—'}</div>
           <div class="card-rank">${p.rang||'—'}</div>
-          <div class="card-power">${p.pouvoir||''}</div>
+          <div class="card-breath">${p.souffle||''}</div>
         </div>
       </div>
-      ${p.clan?`<div class="info-row"><span>🐺</span><span>${p.clan}</span></div>`:''}
-      ${p.jours?`<div class="info-row"><span>📅</span><span>${p.jours} jours de service</span></div>`:''}
-      ${p.obs?`<div style="font-size:0.7rem;color:#554444;margin-top:0.4rem;line-height:1.5">${p.obs}</div>`:''}
-      <div class="card-footer">
-        <span></span>
+      ${p.brigade?`<div class="card-info-row"><span>🛡</span><span>${p.brigade}</span></div>`:''}
+      ${p.jours?`<div class="card-info-row"><span>📅</span><span>${p.jours} jours de service</span></div>`:''}
+      ${p.obs?`<div class="card-obs">${p.obs}</div>`:''}
+      <div class="card-footer"><span></span>
         <div class="card-actions">
-          ${state.user?`<button class="btn btn-sm" onclick="editDemon('${id}')">✏</button><button class="btn btn-sm btn-blood" onclick="deleteDemon('${id}')">✕</button>`:''}
+          ${state.user?`<button class="btn btn-sm" onclick="editPourf('${id}')">✏</button><button class="btn btn-sm btn-red" onclick="deletePourf('${id}')">✕</button>`:''}
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-window.openModal = (id) => {
-  if (id === 'modal-demon') {
-    state.editingDemonId = null;
-    document.getElementById('modal-demon-title').textContent = '🩸 Nouvelle Fiche Démoniaque';
-    ['demon-nom','demon-jours','demon-clan','demon-obs'].forEach(f => { const el = document.getElementById(f); if(el) el.value = ''; });
-  }
-  if (id === 'modal-mission') {
-    state.editingMissionId = null;
-    document.getElementById('modal-mission-title').textContent = '📜 Nouvelle Mission';
-    ['mission-titre','mission-membres','mission-desc'].forEach(f => { const el = document.getElementById(f); if(el) el.value = ''; });
-  }
+window.openModal=id=>{
+  if(id==='modal-pourf'){ state.editingPourId=null; document.getElementById('modal-pourf-title').textContent='⚔ Nouvelle Fiche de Service'; ['pourf-nom','pourf-jours','pourf-brigade','pourf-obs'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';}); }
+  if(id==='modal-mission'){ state.editingMissionId=null; document.getElementById('modal-mission-title').textContent='📋 Nouvelle Mission'; ['mission-titre','mission-membres','mission-desc'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';}); }
   document.getElementById(id).classList.remove('hidden');
 };
-window.closeModal = (id) => document.getElementById(id).classList.add('hidden');
+window.closeModal=id=>document.getElementById(id).classList.add('hidden');
 
-window.editDemon = (id) => {
-  const p = state.registre[id]; if (!p) return;
-  state.editingDemonId = id;
-  document.getElementById('modal-demon-title').textContent = '✏ Modifier la Fiche';
-  document.getElementById('demon-nom').value = p.nom||'';
-  document.getElementById('demon-rang').value = p.rang||'';
-  document.getElementById('demon-pouvoir').value = p.pouvoir||'';
-  document.getElementById('demon-statut').value = p.statut||'alive';
-  document.getElementById('demon-jours').value = p.jours||'';
-  document.getElementById('demon-clan').value = p.clan||'';
-  document.getElementById('demon-obs').value = p.obs||'';
-  document.getElementById('modal-demon').classList.remove('hidden');
+window.editPourf=id=>{
+  const p=state.registre[id]; if(!p) return;
+  state.editingPourId=id;
+  document.getElementById('modal-pourf-title').textContent='✏ Modifier la Fiche';
+  document.getElementById('pourf-nom').value=p.nom||'';
+  document.getElementById('pourf-rang').value=p.rang||'';
+  document.getElementById('pourf-souffle').value=p.souffle||'';
+  document.getElementById('pourf-statut').value=p.statut||'alive';
+  document.getElementById('pourf-jours').value=p.jours||'';
+  document.getElementById('pourf-brigade').value=p.brigade||'';
+  document.getElementById('pourf-obs').value=p.obs||'';
+  document.getElementById('modal-pourf').classList.remove('hidden');
 };
-window.saveDemon = async () => {
-  if (!state.user) { toast('Connexion requise', 'error'); return; }
-  const data = {
-    nom: document.getElementById('demon-nom').value.trim(),
-    rang: document.getElementById('demon-rang').value,
-    pouvoir: document.getElementById('demon-pouvoir').value,
-    statut: document.getElementById('demon-statut').value,
-    jours: document.getElementById('demon-jours').value,
-    clan: document.getElementById('demon-clan').value.trim(),
-    obs: document.getElementById('demon-obs').value.trim(),
-    updatedAt: Date.now(),
+window.savePourf=async()=>{
+  if(!state.user){toast('Connexion requise','error');return;}
+  const data={
+    nom:document.getElementById('pourf-nom').value.trim(),
+    rang:document.getElementById('pourf-rang').value,
+    souffle:document.getElementById('pourf-souffle').value,
+    statut:document.getElementById('pourf-statut').value,
+    jours:document.getElementById('pourf-jours').value,
+    brigade:document.getElementById('pourf-brigade').value.trim(),
+    obs:document.getElementById('pourf-obs').value.trim(),
+    updatedAt:Date.now(),
   };
-  if (!data.nom) { toast('Nom requis', 'error'); return; }
-  if (state.editingDemonId) {
-    await update(ref(db,'registre/'+state.editingDemonId), data);
-    logAction('edit','Registre',data.nom); toast('Fiche mise à jour 🩸','success');
+  if(!data.nom){toast('Nom requis','error');return;}
+  if(state.editingPourId){
+    await update(ref(db,'registre/'+state.editingPourId),data);
+    logAction('edit','Registre',data.nom); toast('Fiche mise à jour','success');
   } else {
-    data.createdAt = Date.now();
-    await push(ref(db,'registre'), data);
-    logAction('add','Registre',data.nom); toast('Fiche scellée 🩸','success');
+    data.createdAt=Date.now();
+    await push(ref(db,'registre'),data);
+    logAction('add','Registre',data.nom); toast('Fiche scellée ⚔','success');
   }
-  closeModal('modal-demon');
+  closeModal('modal-pourf');
 };
-window.deleteDemon = async (id) => {
-  if (!confirm('Supprimer cette fiche ?')) return;
-  const nom = state.registre[id]?.nom;
+window.deletePourf=async id=>{
+  if(!confirm('Supprimer cette fiche ?')) return;
+  const nom=state.registre[id]?.nom;
   await remove(ref(db,'registre/'+id));
   logAction('del','Registre',nom); toast('Fiche supprimée','info');
 };
 
 // CIBLES
-function renderCibles() {
-  const list = document.getElementById('cibles-list');
-  const items = Object.entries(state.cibles);
-  if (!items.length) { list.innerHTML = '<div class="empty-state"><span class="empty-icon">🎯</span>Aucune cible désignée.</div>'; return; }
-  list.innerHTML = items.map(([id,c]) => {
-    const pClass = ['','priority-1','priority-2','priority-3'][c.priorite]||'priority-3';
-    const pLabel = ['','⚠ PRIORITÉ I','⚡ PRIORITÉ II','• PRIORITÉ III'][c.priorite]||'';
-    return `<div class="demon-card target-card">
+function renderCibles(){
+  const list=document.getElementById('cibles-list');
+  const items=Object.entries(state.cibles);
+  if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">🎯</span>Aucune cible désignée.</div>';return;}
+  list.innerHTML=items.map(([id,c])=>{
+    const pc=['','p1','p2','p3'][c.priorite]||'p3';
+    const pl=['','⚠ PRIORITÉ I','⚡ PRIORITÉ II','• PRIORITÉ III'][c.priorite]||'';
+    return `<div class="member-card target-card">
       <div class="card-header">
         <div class="card-avatar">🎯</div>
         <div>
           <div class="card-name">${c.prenom||''} ${c.nom||''}</div>
           <div class="card-rank">${c.rang||'—'}</div>
-          <span class="priority-badge ${pClass}">${pLabel}</span>
+          <span class="priority-badge ${pc}">${pl}</span>
         </div>
       </div>
-      ${c.motif?`<div style="font-size:0.73rem;color:#664444;margin-top:0.3rem;line-height:1.5">${c.motif}</div>`:''}
-      <div class="card-footer"><span></span><div class="card-actions">
-        ${state.user?`<button class="btn btn-sm btn-blood" onclick="deleteCible('${id}')">Retirer</button>`:''}
-      </div></div>
+      ${c.motif?`<div class="card-obs">${c.motif}</div>`:''}
+      <div class="card-footer"><span></span>
+        <div class="card-actions">${state.user?`<button class="btn btn-sm btn-red" onclick="deleteCible('${id}')">Retirer</button>`:''}</div>
+      </div>
     </div>`;
   }).join('');
 }
-window.updatePriority = () => {
-  const sel = document.getElementById('cible-rang');
-  const prio = sel.options[sel.selectedIndex]?.value;
-  document.getElementById('cible-priorite').value = prio;
-  document.getElementById('cible-priorite-display').value = ['','Priorité I — Critique','Priorité II — Haute','Priorité III — Normale'][prio]||'';
+window.updatePriority=()=>{
+  const sel=document.getElementById('cible-rang');
+  const prio=sel.options[sel.selectedIndex]?.value;
+  document.getElementById('cible-priorite').value=prio;
+  document.getElementById('cible-priorite-display').value=['','Priorité I — Critique','Priorité II — Haute','Priorité III — Normale'][prio]||'';
 };
-window.saveCible = async () => {
-  if (!state.user) { toast('Connexion requise','error'); return; }
-  const data = {
-    prenom: document.getElementById('cible-prenom').value.trim(),
-    nom: document.getElementById('cible-nom').value.trim(),
-    rang: document.getElementById('cible-rang').value,
-    priorite: parseInt(document.getElementById('cible-priorite').value)||3,
-    motif: document.getElementById('cible-motif').value.trim(),
-    createdAt: Date.now(),
-  };
-  await push(ref(db,'cibles'), data);
+window.saveCible=async()=>{
+  if(!state.user){toast('Connexion requise','error');return;}
+  const data={prenom:document.getElementById('cible-prenom').value.trim(),nom:document.getElementById('cible-nom').value.trim(),rang:document.getElementById('cible-rang').value,priorite:parseInt(document.getElementById('cible-priorite').value)||3,motif:document.getElementById('cible-motif').value.trim(),createdAt:Date.now()};
+  await push(ref(db,'cibles'),data);
   logAction('add','Cibles',data.prenom+' '+data.nom); toast('Avis émis 🎯','success');
   closeModal('modal-cible');
 };
-window.deleteCible = async (id) => {
-  if (!confirm('Retirer cette cible ?')) return;
-  const nom = `${state.cibles[id]?.prenom} ${state.cibles[id]?.nom}`;
+window.deleteCible=async id=>{
+  if(!confirm('Retirer cette cible ?')) return;
+  const nom=`${state.cibles[id]?.prenom} ${state.cibles[id]?.nom}`;
   await remove(ref(db,'cibles/'+id));
   logAction('del','Cibles',nom); toast('Cible retirée','info');
 };
 
 // MISSIONS
-function renderMissions() {
-  const cols = { attente:'missions-attente', encours:'missions-encours', terminee:'missions-terminees', echec:'missions-echec' };
-  Object.values(cols).forEach(id => document.getElementById(id).innerHTML = '');
-  Object.entries(state.missions).forEach(([id,m]) => {
-    const col = cols[m.statut]||cols.attente;
-    const pClass = { haute:'priority-1', normale:'priority-3', basse:'priority-3' }[m.priorite]||'priority-3';
-    const pLabel = { haute:'🔥 HAUTE', normale:'NORMALE', basse:'BASSE' }[m.priorite]||m.priorite;
-    document.getElementById(col).insertAdjacentHTML('beforeend', `<div class="mission-card">
-      <div style="display:flex;align-items:flex-start;gap:0.4rem;margin-bottom:0.3rem">
-        <div class="mission-card-title" style="flex:1">${m.titre||'—'}</div>
-        <span class="priority-badge ${pClass}" style="font-size:0.58rem;flex-shrink:0">${pLabel}</span>
+function renderMissions(){
+  const cols={attente:'missions-attente',encours:'missions-encours',terminee:'missions-terminees',echec:'missions-echec'};
+  Object.values(cols).forEach(id=>document.getElementById(id).innerHTML='');
+  Object.entries(state.missions).forEach(([id,m])=>{
+    const col=cols[m.statut]||cols.attente;
+    const pc={haute:'p1',normale:'p3',basse:'p3'}[m.priorite]||'p3';
+    const pl={haute:'HAUTE',normale:'NORMALE',basse:'BASSE'}[m.priorite]||m.priorite;
+    document.getElementById(col).insertAdjacentHTML('beforeend',`<div class="mission-card">
+      <div style="display:flex;align-items:flex-start;gap:0.4rem;margin-bottom:0.2rem">
+        <div class="mission-title" style="flex:1">${m.titre||'—'}</div>
+        <span class="priority-badge ${pc}" style="font-size:0.57rem;flex-shrink:0">${pl}</span>
       </div>
-      ${m.membres?`<div style="font-size:0.68rem;color:var(--blood2);margin-bottom:0.25rem">👥 ${m.membres}</div>`:''}
-      ${m.desc?`<div class="mission-card-desc">${m.desc}</div>`:''}
-      ${state.user?`<div style="display:flex;gap:0.3rem;margin-top:0.5rem;justify-content:flex-end">
+      ${m.membres?`<div class="mission-members">👥 ${m.membres}</div>`:''}
+      ${m.desc?`<div class="mission-desc">${m.desc}</div>`:''}
+      ${state.user?`<div style="display:flex;gap:0.25rem;margin-top:0.45rem;justify-content:flex-end">
         <button class="btn btn-sm" onclick="editMission('${id}')">✏</button>
-        <button class="btn btn-sm btn-blood" onclick="deleteMission('${id}')">✕</button>
+        <button class="btn btn-sm btn-red" onclick="deleteMission('${id}')">✕</button>
       </div>`:''}
     </div>`);
   });
 }
-window.editMission = (id) => {
-  const m = state.missions[id]; if(!m) return;
-  state.editingMissionId = id;
-  document.getElementById('modal-mission-title').textContent = '✏ Modifier la Mission';
-  document.getElementById('mission-titre').value = m.titre||'';
-  document.getElementById('mission-priorite').value = m.priorite||'normale';
-  document.getElementById('mission-statut').value = m.statut||'attente';
-  document.getElementById('mission-membres').value = m.membres||'';
-  document.getElementById('mission-desc').value = m.desc||'';
+window.editMission=id=>{
+  const m=state.missions[id]; if(!m) return;
+  state.editingMissionId=id;
+  document.getElementById('modal-mission-title').textContent='✏ Modifier la Mission';
+  document.getElementById('mission-titre').value=m.titre||'';
+  document.getElementById('mission-priorite').value=m.priorite||'normale';
+  document.getElementById('mission-statut').value=m.statut||'attente';
+  document.getElementById('mission-membres').value=m.membres||'';
+  document.getElementById('mission-desc').value=m.desc||'';
   document.getElementById('modal-mission').classList.remove('hidden');
 };
-window.saveMission = async () => {
-  if (!state.user) { toast('Connexion requise','error'); return; }
-  const data = {
-    titre: document.getElementById('mission-titre').value.trim(),
-    priorite: document.getElementById('mission-priorite').value,
-    statut: document.getElementById('mission-statut').value,
-    membres: document.getElementById('mission-membres').value.trim(),
-    desc: document.getElementById('mission-desc').value.trim(),
-    updatedAt: Date.now(),
-  };
-  if (!data.titre) { toast('Titre requis','error'); return; }
-  if (state.editingMissionId) {
-    await update(ref(db,'missions/'+state.editingMissionId), data);
+window.saveMission=async()=>{
+  if(!state.user){toast('Connexion requise','error');return;}
+  const data={titre:document.getElementById('mission-titre').value.trim(),priorite:document.getElementById('mission-priorite').value,statut:document.getElementById('mission-statut').value,membres:document.getElementById('mission-membres').value.trim(),desc:document.getElementById('mission-desc').value.trim(),updatedAt:Date.now()};
+  if(!data.titre){toast('Titre requis','error');return;}
+  if(state.editingMissionId){
+    await update(ref(db,'missions/'+state.editingMissionId),data);
     logAction('edit','Missions',data.titre); toast('Mission mise à jour','success');
   } else {
-    data.createdAt = Date.now();
-    await push(ref(db,'missions'), data);
-    logAction('add','Missions',data.titre); toast('Mission enregistrée 📜','success');
+    data.createdAt=Date.now();
+    await push(ref(db,'missions'),data);
+    logAction('add','Missions',data.titre); toast('Mission enregistrée','success');
   }
   closeModal('modal-mission');
 };
-window.deleteMission = async (id) => {
-  if (!confirm('Supprimer cette mission ?')) return;
-  const titre = state.missions[id]?.titre;
+window.deleteMission=async id=>{
+  if(!confirm('Supprimer cette mission ?')) return;
+  const titre=state.missions[id]?.titre;
   await remove(ref(db,'missions/'+id));
   logAction('del','Missions',titre); toast('Mission supprimée','info');
 };
 
 // OPS
-function renderOps() {
-  const list = document.getElementById('ops-list'); if(!list) return;
-  const items = Object.entries(state.ops);
-  if (!items.length) { list.innerHTML = '<div class="empty-state"><span class="empty-icon">💀</span>Aucune opération classifiée.</div>'; return; }
-  list.innerHTML = items.map(([id,op]) => {
-    const pClass = { critique:'op-priority-critique', haute:'op-priority-haute', normale:'op-priority-normale' }[op.priorite]||'op-priority-normale';
-    return `<div class="secret-op-card">
-      <span class="op-type">${op.type||'—'}</span>
-      <span class="priority-badge ${pClass}" style="margin-left:0.5rem;font-size:0.6rem">${(op.priorite||'').toUpperCase()}</span>
-      <div style="margin-top:0.4rem"><span style="color:var(--white);font-size:0.82rem">${op.cible||'—'}</span>${op.operateur?`<span style="font-size:0.7rem;color:#553355;margin-left:0.5rem">→ ${op.operateur}</span>`:''}</div>
-      ${op.notes?`<div style="font-size:0.73rem;color:#553355;margin-top:0.4rem;line-height:1.6">${op.notes}</div>`:''}
-      ${state.user&&hasRole('sphere','admin')?`<div style="display:flex;gap:0.3rem;margin-top:0.5rem;justify-content:flex-end">
+function renderOps(){
+  const list=document.getElementById('ops-list'); if(!list) return;
+  const items=Object.entries(state.ops);
+  if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">⬛</span>Aucune opération classifiée.</div>';return;}
+  list.innerHTML=items.map(([id,op])=>{
+    const pc={critique:'op-crit',haute:'op-haute',normale:'op-norm'}[op.priorite]||'op-norm';
+    return `<div class="op-card">
+      <span class="op-type-badge">${op.type||'—'}</span>
+      <span class="priority-badge ${pc}" style="margin-left:0.4rem;font-size:0.58rem">${(op.priorite||'').toUpperCase()}</span>
+      <div style="margin-top:0.35rem"><span style="color:var(--white);font-size:0.8rem">${op.cible||'—'}</span>${op.operateur?`<span style="font-size:0.68rem;color:var(--text2);margin-left:0.45rem">→ ${op.operateur}</span>`:''}</div>
+      ${op.notes?`<div style="font-size:0.7rem;color:var(--text2);margin-top:0.35rem;line-height:1.55">${op.notes}</div>`:''}
+      ${state.user&&hasRole('sphere','admin')?`<div style="display:flex;gap:0.25rem;margin-top:0.45rem;justify-content:flex-end">
         <button class="btn btn-sm" onclick="editOp('${id}')">✏</button>
-        <button class="btn btn-sm btn-blood" onclick="deleteOp('${id}')">✕</button>
+        <button class="btn btn-sm btn-red" onclick="deleteOp('${id}')">✕</button>
       </div>`:''}
     </div>`;
   }).join('');
 }
-window.editOp = (id) => {
-  const op = state.ops[id]; if(!op) return;
-  state.editingOpId = id;
-  document.getElementById('op-type').value = op.type||'';
-  document.getElementById('op-priorite').value = op.priorite||'normale';
-  document.getElementById('op-cible').value = op.cible||'';
-  document.getElementById('op-operateur').value = op.operateur||'';
-  document.getElementById('op-statut').value = op.statut||'attente';
-  document.getElementById('op-notes').value = op.notes||'';
+window.editOp=id=>{
+  const op=state.ops[id]; if(!op) return;
+  state.editingOpId=id;
+  document.getElementById('op-type').value=op.type||'';
+  document.getElementById('op-priorite').value=op.priorite||'normale';
+  document.getElementById('op-cible').value=op.cible||'';
+  document.getElementById('op-operateur').value=op.operateur||'';
+  document.getElementById('op-statut').value=op.statut||'attente';
+  document.getElementById('op-notes').value=op.notes||'';
   openModal('modal-op');
 };
-window.saveOp = async () => {
-  if (!hasRole('sphere','admin')) { toast('Accès refusé','error'); return; }
-  const data = {
-    type: document.getElementById('op-type').value,
-    priorite: document.getElementById('op-priorite').value,
-    cible: document.getElementById('op-cible').value.trim(),
-    operateur: document.getElementById('op-operateur').value.trim(),
-    statut: document.getElementById('op-statut').value,
-    notes: document.getElementById('op-notes').value.trim(),
-    updatedAt: Date.now(),
-  };
-  if (state.editingOpId) {
-    await update(ref(db,'ops/'+state.editingOpId), data); toast('Opération mise à jour','success');
+window.saveOp=async()=>{
+  if(!hasRole('sphere','admin')){toast('Accès refusé','error');return;}
+  const data={type:document.getElementById('op-type').value,priorite:document.getElementById('op-priorite').value,cible:document.getElementById('op-cible').value.trim(),operateur:document.getElementById('op-operateur').value.trim(),statut:document.getElementById('op-statut').value,notes:document.getElementById('op-notes').value.trim(),updatedAt:Date.now()};
+  if(state.editingOpId){
+    await update(ref(db,'ops/'+state.editingOpId),data); toast('Opération mise à jour','success');
   } else {
-    data.createdAt = Date.now();
-    await push(ref(db,'ops'), data); toast('Opération scellée 💀','success');
+    data.createdAt=Date.now();
+    await push(ref(db,'ops'),data); toast('Opération scellée','success');
   }
-  state.editingOpId = null; closeModal('modal-op');
+  state.editingOpId=null; closeModal('modal-op');
 };
-window.deleteOp = async (id) => {
-  if (!confirm('Supprimer cette opération ?')) return;
+window.deleteOp=async id=>{
+  if(!confirm('Supprimer cette opération ?')) return;
   await remove(ref(db,'ops/'+id)); toast('Opération supprimée','info');
 };
 
 // HISTORIQUE
-function renderHistorique() {
-  const tbody = document.getElementById('historique-body');
-  const empty = document.getElementById('historique-empty');
-  let items = state.historique;
-  if (state.historiqueFilter !== 'all') items = items.filter(h => h.action === state.historiqueFilter);
-  if (!items.length) { tbody.innerHTML=''; empty.style.display=''; return; }
-  empty.style.display = 'none';
-  tbody.innerHTML = items.map(h => {
-    const cls = { add:'action-add', edit:'action-edit', del:'action-del' }[h.action]||'';
-    const label = { add:'Ajout', edit:'Édition', del:'Suppression' }[h.action]||h.action;
-    const date = new Date(h.ts).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
-    return `<tr><td><span class="history-action ${cls}">${label}</span></td><td>${h.target||'—'}</td><td style="color:var(--text2)">${h.detail||'—'}</td><td style="color:var(--gold)">${h.by||'—'}</td><td style="color:#553333;font-size:0.7rem">${date}</td></tr>`;
+function renderHistorique(){
+  const tbody=document.getElementById('historique-body');
+  const empty=document.getElementById('historique-empty');
+  let items=state.historique;
+  if(state.historiqueFilter!=='all') items=items.filter(h=>h.action===state.historiqueFilter);
+  if(!items.length){tbody.innerHTML='';empty.style.display='';return;}
+  empty.style.display='none';
+  tbody.innerHTML=items.map(h=>{
+    const cls={add:'ha-add',edit:'ha-edit',del:'ha-del'}[h.action]||'';
+    const lbl={add:'Ajout',edit:'Édition',del:'Suppression'}[h.action]||h.action;
+    const date=new Date(h.ts).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+    return `<tr><td><span class="ha ${cls}">${lbl}</span></td><td style="color:var(--silver)">${h.target||'—'}</td><td style="color:var(--text2)">${h.detail||'—'}</td><td style="color:var(--blue2)">${h.by||'—'}</td><td style="color:var(--text2);font-size:0.68rem">${date}</td></tr>`;
   }).join('');
 }
-window.filterHistorique = (f, btn) => {
-  state.historiqueFilter = f;
-  document.querySelectorAll('#view-historique .filter-tab').forEach(el => el.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+window.filterHistorique=(f,btn)=>{
+  state.historiqueFilter=f;
+  document.querySelectorAll('#view-historique .filter-tab').forEach(el=>el.classList.remove('active'));
+  if(btn) btn.classList.add('active');
   renderHistorique();
 };
-async function logAction(action, target, detail) {
-  await push(ref(db,'historique'), { action, target, detail, by: state.user?.name||'Anonyme', ts: Date.now() });
+async function logAction(action,target,detail){
+  await push(ref(db,'historique'),{action,target,detail,by:state.user?.name||'Anonyme',ts:Date.now()});
 }
 
 // WHITELIST
-function renderWhitelist() {
-  const list = document.getElementById('whitelist-list'); if(!list) return;
-  const items = Object.entries(state.whitelist);
-  if (!items.length) { list.innerHTML = '<div class="empty-state" style="padding:1rem">Aucun éditeur.</div>'; return; }
-  list.innerHTML = items.map(([id,u]) => {
-    const roleHtml = (u.roles||[]).map(r => {
-      const cls = { admin:'role-admin', veilleur:'role-veilleur', sphere:'role-sphere', adminsphere:'role-admin' }[r]||'';
+function renderWhitelist(){
+  const list=document.getElementById('whitelist-list'); if(!list) return;
+  const items=Object.entries(state.whitelist);
+  if(!items.length){list.innerHTML='<div class="empty-state" style="padding:1rem">Aucun éditeur.</div>';return;}
+  list.innerHTML=items.map(([id,u])=>{
+    const roleHtml=(u.roles||[]).map(r=>{
+      const cls={admin:'r-admin',veilleur:'r-veilleur',sphere:'r-sphere',adminsphere:'r-admin'}[r]||'';
       return `<span class="role-badge ${cls}">${r}</span>`;
     }).join('');
-    return `<div class="whitelist-item">
+    return `<div class="wl-item">
       <div><div class="wl-name">${u.name||'—'}</div><div class="wl-id">${id}</div></div>
       <div class="wl-roles">${roleHtml}</div>
-      ${hasRole('admin')&&state.user?.steamId!==id?`<div style="display:flex;gap:0.3rem">
+      ${hasRole('admin')&&state.user?.steamId!==id?`<div style="display:flex;gap:0.25rem">
         <button class="btn btn-sm" onclick="openRolesModal('${id}')">Rôles</button>
-        <button class="btn btn-sm btn-blood" onclick="removeUser('${id}')">✕</button>
+        <button class="btn btn-sm btn-red" onclick="removeUser('${id}')">✕</button>
       </div>`:''}
     </div>`;
   }).join('');
 }
-window.addUser = async () => {
-  if (!hasRole('admin')) { toast('Admin requis','error'); return; }
-  const steamId = document.getElementById('user-steamid').value.trim();
-  const name = document.getElementById('user-nom').value.trim();
-  if (!steamId.match(/^[0-9]{17}$/)||!name) { toast('Steam ID et nom requis','error'); return; }
-  const roles = ['veilleur','sphere','adminsphere','admin'].filter(r => document.getElementById('role-'+r)?.checked);
-  if (!roles.length) { toast('Au moins un rôle requis','error'); return; }
-  await set(ref(db,'whitelist/'+steamId), { name, roles, createdAt: Date.now() });
-  logAction('add','Whitelist',name); toast(name+' ajouté 🩸','success');
+window.addUser=async()=>{
+  if(!hasRole('admin')){toast('Admin requis','error');return;}
+  const steamId=document.getElementById('user-steamid').value.trim();
+  const name=document.getElementById('user-nom').value.trim();
+  if(!steamId.match(/^[0-9]{17}/)||!name){toast('Steam ID et nom requis','error');return;}
+  const roles=['veilleur','sphere','adminsphere','admin'].filter(r=>document.getElementById('role-'+r)?.checked);
+  if(!roles.length){toast('Au moins un rôle requis','error');return;}
+  await set(ref(db,'whitelist/'+steamId),{name,roles,createdAt:Date.now()});
+  logAction('add','Whitelist',name); toast(name+' ajouté','success');
   closeModal('modal-adduser');
 };
-window.removeUser = async (id) => {
-  if (!confirm('Retirer cet utilisateur ?')) return;
-  const name = state.whitelist[id]?.name;
+window.removeUser=async id=>{
+  if(!confirm('Retirer cet utilisateur ?')) return;
+  const name=state.whitelist[id]?.name;
   await remove(ref(db,'whitelist/'+id));
   logAction('del','Whitelist',name); toast('Utilisateur retiré','info');
 };
-window.openRolesModal = (id) => {
-  document.getElementById('roles-target-id').value = id;
-  const current = state.whitelist[id]?.roles||[];
-  document.getElementById('roles-checks').innerHTML = ['veilleur','sphere','adminsphere','admin'].map(r =>
-    `<label class="checkbox-label"><input type="checkbox" id="modal-role-${r}" value="${r}" ${current.includes(r)?'checked':''}><div>${r}</div></label>`
+window.openRolesModal=id=>{
+  document.getElementById('roles-target-id').value=id;
+  const current=state.whitelist[id]?.roles||[];
+  document.getElementById('roles-checks').innerHTML=['veilleur','sphere','adminsphere','admin'].map(r=>
+    `<label class="cb-label"><input type="checkbox" id="modal-role-${r}" value="${r}" ${current.includes(r)?'checked':''}><div>${r}</div></label>`
   ).join('');
   openModal('modal-roles');
 };
-window.saveRoles = async () => {
-  const id = document.getElementById('roles-target-id').value;
-  const roles = ['veilleur','sphere','adminsphere','admin'].filter(r => document.getElementById('modal-role-'+r)?.checked);
-  if (!roles.length) { toast('Au moins un rôle requis','error'); return; }
-  await update(ref(db,'whitelist/'+id), { roles });
+window.saveRoles=async()=>{
+  const id=document.getElementById('roles-target-id').value;
+  const roles=['veilleur','sphere','adminsphere','admin'].filter(r=>document.getElementById('modal-role-'+r)?.checked);
+  if(!roles.length){toast('Au moins un rôle requis','error');return;}
+  await update(ref(db,'whitelist/'+id),{roles});
   logAction('edit','Whitelist',state.whitelist[id]?.name); toast('Rôles mis à jour','success');
   closeModal('modal-roles');
 };
 
 // CODEX
-function renderCodex() {
-  const sections = [
-    { icon:'🩸', title:'Les Pouvoirs Sanguinaires', body:`Les Pouvoirs Sanguinaires sont les Arts du Sang — des techniques démoniaques uniques développées par chaque démon selon sa nature profonde. Ils sont l'expression directe de son essence et de sa puissance.<br><br>
-<strong>Art du Sang — Manipulation</strong> — Contrôle absolu du sang, des corps et de la matière vivante.<br>
-<strong>Art du Sang — Illusion</strong> — Projection de réalités alternatives, terreurs psychiques dévastatrices.<br>
-<strong>Art du Sang — Régénération</strong> — Récupération instantanée de toute blessure, résistance quasi absolue.<br>
-<strong>Art du Sang — Transformation</strong> — Métamorphose du corps, absorption de formes adverses.<br>
-<strong>Art du Sang — Destruction</strong> — Libération d'énergie destructrice pure, annihilation à distance.` },
-    { icon:'👑', title:'Hiérarchie Démoniaque', body:`L'Ordre Démoniaque est structuré en strates de puissance strictement définies. La montée en rang exige la consommation de sang humain et la preuve de sa valeur au combat.<br><br>
-<strong>Seigneur Suprême</strong> — L'Origine. Père de tous les démons. Puissance absolue et immortalité solaire.<br>
-<strong>Conseiller</strong> — Bras droit du Seigneur. Coordinateurs des grandes opérations démoniaques.<br>
-<strong>LS — Lune Supérieure</strong> — Rang 1 à 6. Élite absolue. Capables de régénération totale même sans tête.<br>
-<strong>LI — Lune Inférieure</strong> — Rang 1 à 6. Redoutables, mais éliminés dès qu'ils ne satisfont plus le Seigneur.<br>
-<strong>Rangs Inférieurs</strong> — Démons ordinaires. Chair à canon ou futurs initiés.` },
-    { icon:'⚔', title:'Protocoles de Combat', body:`<strong>Directive I — Infiltration nocturne</strong> — Toutes les offensives sont lancées après le coucher du soleil. L'exposition solaire est une mort certaine.<br><br>
-<strong>Directive II — Désorientation sensorielle</strong> — Exploiter l'Art du Sang pour briser l'ennemi psychologiquement avant de l'affronter physiquement.<br><br>
-<strong>Directive III — Absorption prioritaire</strong> — Neutraliser les cibles de haute valeur pour absorber leurs compétences et renforcer le collectif.<br><br>
-<strong>Directive IV — Jamais seul</strong> — Un démon isolé est vulnérable. Les opérations se mènent en meute.` },
-    { icon:'🌑', title:'Les Déchus', body:`Un Déchu est un démon ayant perdu sa place dans l'Ordre — par défaite, trahison, ou décision du Seigneur Suprême.<br><br>
-<strong>Statut</strong> — Le Déchu n'est ni mort ni vivant dans nos archives. Il est effacé de la hiérarchie active.<br><br>
-<strong>Réintégration</strong> — Exceptionnellement possible, sur décision du Seigneur ou d'un LS. Le Déchu doit prouver sa valeur par un acte d'une violence exemplaire.<br><br>
-<strong>Traitement</strong> — Les Déchus sont traités comme des menaces jusqu'à preuve du contraire.` },
-    { icon:'💀', title:'Faiblesse et Immunités', body:`Les démons sont puissants — mais pas invincibles. Connaître leurs failles est l'unique avantage des pourfendeurs.<br><br>
-<strong>Lumière solaire</strong> — Désintégration complète en quelques secondes. Aucune régénération possible.<br><br>
-<strong>Lames Nichirin</strong> — Forgées dans le métal ayant absorbé le soleil. La décapitation par ce métal est létale.<br><br>
-<strong>Glycine (Wistéria)</strong> — Toxique. Utilisée comme barrière défensive par l'Ordre adverse.<br><br>
-<strong>Immunités</strong> — Les blessures ordinaires ne font que ralentir. La régénération est quasi instantanée pour les rangs supérieurs.` }
+function renderCodex(){
+  const sections=[
+    {icon:'🌊',title:'Les Souffles de Combat',body:`Les Souffles sont des techniques respiratoires codifiées transmises au sein de l'Ordre. Chaque style amplifie les capacités physiques du pourfendeur et détermine ses formes de combat.<br><br>
+<strong>Souffle de l'Eau</strong> — Fluidité et adaptation. Treize formes enchaînées inspirées du mouvement de l'eau.<br>
+<strong>Souffle de la Flamme</strong> — Intensité et destruction. Techniques explosives à haute vélocité.<br>
+<strong>Souffle de la Foudre</strong> — Vitesse absolue. Un seul coup porté à vitesse fulgurante.<br>
+<strong>Souffle de la Roche</strong> — Endurance et défense. Formes lourdes et impénétrables.<br>
+<strong>Souffle de la Fleur</strong> — Imprévisibilité et grâce. Mouvements rotatifs à 360°.`},
+    {icon:'💀',title:'Anatomie des Démons',body:`Les démons sont des humains corrompus par le sang de Muzan Kibutsuji. Leur biologie est radicalement altérée, leur conférant des capacités surhumaines et une régénération quasi instantanée.<br><br>
+<strong>Régénération cellulaire</strong> — Les démons se régénèrent de toute blessure en quelques secondes. Seule la décapitation par une lame Nichirin est létale.<br>
+<strong>Arts du Sang</strong> — Les démons puissants développent des techniques offensives dérivées de leur sang.<br>
+<strong>Faiblesse solaire</strong> — La lumière du soleil désintègre les démons instantanément.<br>
+<strong>Wistéria</strong> — La glycine est toxique pour les démons. Utilisée comme barrière défensive.`},
+    {icon:'⚔',title:"Hiérarchie de l'Ordre",body:`L'Ordre des Pourfendeurs est une organisation secrète structurée en grades stricts. L'avancement est conditionné par les performances au combat.<br><br>
+<strong>Maître des Pourfendeurs</strong> — Chef suprême. Autorité absolue sur toutes les opérations.<br>
+<strong>Conseiller</strong> — Bras droit du Maître. Coordinateurs stratégiques.<br>
+<strong>Pilier (Hashira)</strong> — Neuf combattants d'élite. Chacun maîtrise un Souffle à son apogée.<br>
+<strong>Kinoe → Mizunoto</strong> — Dix grades intermédiaires numérotés par les dix tiges célestes.`},
+    {icon:'📋',title:'Protocoles Opérationnels',body:`<strong>Directive I — Capture prioritaire</strong> — Toute cible identifiée doit être neutralisée et capturée si possible.<br><br>
+<strong>Directive II — Extraction d'informations</strong> — Le sujet capturé doit être soumis à une interrogation prolongée.<br><br>
+<strong>Directive III — Bris de volonté</strong> — Si le sujet résiste, recourir à la privation sensorielle et aux menaces.<br><br>
+<strong>Directive IV — Lames Nichirin</strong> — Confisquer systématiquement toute lame Nichirin ennemie.<br><br>
+<strong>Directive V — Élimination contrôlée</strong> — Une fois les informations obtenues, l'élimination doit être discrète.`},
+    {icon:'🗡',title:'Les Lames Nichirin',body:`Les lames Nichirin sont forgées à partir d'un minerai rare extrait des plus hauts sommets — des roches ayant absorbé la lumière solaire depuis des millénaires. Ce métal est le seul capable de décapiter définitivement un démon.<br><br>
+<strong>Teinte de la lame</strong> — Lorsqu'un pourfendeur saisit sa lame pour la première fois, elle prend la couleur correspondant à son Souffle dominant.<br><br>
+<strong>Lame noire</strong> — Couleur extrêmement rare. Signification inconnue. Les porteurs ont une espérance de vie statistiquement réduite.`}
   ];
-  document.getElementById('codex-sections').innerHTML = sections.map((s,i) => `
-    <div class="codex-section">
-      <button class="codex-toggle" onclick="toggleCodex(${i})">
-        <span>${s.icon} ${s.title}</span><span class="arrow">▼</span>
+  document.getElementById('codex-sections').innerHTML=sections.map((s,i)=>`
+    <div class="codex-item">
+      <button class="codex-btn" onclick="toggleCodex(${i})">
+        <span>${s.icon}</span><span>${s.title}</span><span class="codex-arrow">▾</span>
       </button>
       <div class="codex-body" id="codex-${i}">${s.body}</div>
     </div>`).join('');
 }
-window.toggleCodex = (i) => {
-  document.querySelectorAll('.codex-toggle')[i].classList.toggle('open');
+window.toggleCodex=i=>{
+  document.querySelectorAll('.codex-btn')[i].classList.toggle('open');
   document.getElementById('codex-'+i).classList.toggle('open');
 };
 
 // RULES
-function renderRules() {
-  const rules = [
-    { title:'Discrétion de Sang', body:"Aucune information relative à la Sphère Secrète ne doit fuir. Cela s'applique à tous — même les LS. La trahison n'a pas de rang." },
-    { title:'L\'Ombre Est notre Sang', body:"La Sphère n'existe pas. Ses opérateurs n'ont pas de nom, pas de visage. Toute trace est effacée. Toute preuve est détruite." },
-    { title:'Élimination des Témoins', body:"Tout individu ayant vu, entendu ou soupçonné l'existence de la Sphère doit être éliminé. Sans sommation. Sans pitié. Sans exception." },
-    { title:'La Chaîne ne se Brise Pas', body:"Les ordres venant des échelons supérieurs sont absolus. Pas de questionnement sur le terrain. Les doutes attendent après la mission — s'il y a un après." },
-    { title:'Aucune Trace', body:"Communications exclusivement par canaux internes sécurisés. Pas de preuves conservées. Pas d'artefacts compromettants. L'ombre est notre seule maison." },
-    { title:'Le Sang Avant la Vie', body:"En cas de capture, prioriser l'intégrité de la Sphère sur sa propre survie. Mourir en silence vaut mieux que trahir. La Sphère vous a choisi — honorez-la jusqu'au dernier souffle." }
+function renderRules(){
+  const rules=[
+    {title:'Discrétion Absolue',body:"Aucune information relative à la Sphère Secrète ne doit être divulguée à quiconque n'appartenant pas à ses rangs. Cela inclut les Veilleurs et les officiers extérieurs — quelle que soit leur autorité apparente."},
+    {title:"L'Ombre Avant Tout",body:"La Sphère Secrète n'existe pas officiellement. Ses membres opèrent dans l'anonymat le plus total. Les noms, les visages et les méthodes restent dans l'ombre permanente."},
+    {title:"Élimination des Témoins",body:"Tout individu ayant connaissance d'une opération en cours ou de l'existence de la Sphère constitue une menace directe. L'élimination sans sommation est autorisée — et parfois exigée."},
+    {title:"Obéissance à la Chaîne",body:"Les ordres provenant des échelons supérieurs de la Sphère sont non négociables. L'exécution prime sur la compréhension. Les doutes se formulent après la mission, jamais pendant."},
+    {title:"Aucune Trace, Aucun Lien",body:"Toute communication concernant les opérations passe exclusivement par les canaux officiels de la Sphère. La conservation de preuves compromettantes est strictement interdite."},
+    {title:"La Mission Avant la Vie",body:"En cas de capture ou de compromission grave, l'opérateur doit prioriser l'intégrité de la Sphère. Mourir en silence vaut mieux que trahir. La Sphère vous a choisi — honorez ce choix jusqu'au bout."}
   ];
-  const roman = ['I','II','III','IV','V','VI'];
-  document.getElementById('rules-list').innerHTML = rules.map((r,i) => `
-    <div class="rule-item">
-      <button class="rule-toggle" onclick="toggleRule(${i})">
+  const roman=['I','II','III','IV','V','VI'];
+  document.getElementById('rules-list').innerHTML=rules.map((r,i)=>`
+    <div class="rule-card">
+      <button class="rule-btn" onclick="toggleRule(${i})">
         <span class="rule-num">${roman[i]}</span><span>${r.title}</span>
-        <span style="margin-left:auto;color:#3a1a5a;font-size:0.7rem">▼</span>
+        <span style="margin-left:auto;font-size:0.62rem;color:#302248">▾</span>
       </button>
       <div class="rule-body" id="rule-${i}">${r.body}</div>
     </div>`).join('');
 }
-window.toggleRule = (i) => document.getElementById('rule-'+i).classList.toggle('open');
+window.toggleRule=i=>document.getElementById('rule-'+i).classList.toggle('open');
 
 // TOAST
-window.toast = (msg, type='info') => {
-  const el = document.createElement('div');
-  el.className = `toast toast-${type}`; el.textContent = msg;
+window.toast=(msg,type='info')=>{
+  const el=document.createElement('div');
+  el.className=`toast toast-${type}`; el.textContent=msg;
   document.getElementById('toast-container').appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+  setTimeout(()=>el.remove(),3500);
 };
 
 // MUSIC
-let musicPlaying = false;
-window.toggleMusic = () => {
-  musicPlaying = !musicPlaying;
-  document.getElementById('btn-music').textContent = musicPlaying ? '⏸' : '▶';
-  toast(musicPlaying ? '♪ Musique activée' : '♪ Pause','info');
-};
-window.nextTrack = () => toast('♪ Piste suivante','info');
+let musicPlaying=false;
+window.toggleMusic=()=>{ musicPlaying=!musicPlaying; document.getElementById('btn-music').textContent=musicPlaying?'⏸':'▶'; toast(musicPlaying?'♪ Musique activée':'♪ Pause','info'); };
+window.nextTrack=()=>toast('♪ Piste suivante','info');
 
 // CREDS
-window.copyText = (id) => { navigator.clipboard?.writeText(document.getElementById(id).textContent).then(()=>toast('Copié !','success')); };
-window.toggleCredsCode = () => {
-  const el = document.getElementById('creds-code');
-  el.textContent = el.textContent === '••••••' ? (state.user?.code||'—') : '••••••';
-};
+window.copyText=id=>{ navigator.clipboard?.writeText(document.getElementById(id).textContent).then(()=>toast('Copié !','success')); };
+window.toggleCredsCode=()=>{ const el=document.getElementById('creds-code'); el.textContent=el.textContent==='••••••'?(state.user?.code||'—'):'••••••'; };
 
-// CLOSE ON OVERLAY CLICK
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if(e.target===el) el.classList.add('hidden'); });
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el) el.classList.add('hidden');});
 });
 </script>
 </body>
