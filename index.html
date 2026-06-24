@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codex Obscura — Archives des Pourfendeurs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Demonarium — Archives des Pourfendeurs</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,7 +30,7 @@
     --sidebar-w:248px;
   }
 
-  body { font-family: 'Georgia', serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
   /* SPLASH */
   #splash {
@@ -57,11 +60,11 @@
   @keyframes swordGlow { 0%,100%{filter:drop-shadow(0 0 10px rgba(90,138,220,0.5))}50%{filter:drop-shadow(0 0 30px rgba(90,138,220,1))} }
 
   .splash-title {
-    font-size: clamp(3rem, 9vw, 6rem); font-weight: bold;
+    font-size: clamp(3rem, 9vw, 6rem); font-weight: 800;
     color: transparent;
     background: linear-gradient(180deg, #e8ecf4 0%, #9aa8c0 40%, #3a5a9a 100%);
     -webkit-background-clip: text; background-clip: text;
-    letter-spacing: 0.35em; text-align: center; line-height: 1.05;
+    letter-spacing: 0.1em; text-align: center; line-height: 1.05;
     margin-bottom: 0.6rem;
     filter: drop-shadow(0 2px 20px rgba(58,90,154,0.4));
   }
@@ -159,7 +162,7 @@
   .btn {
     padding: 0.35rem 0.8rem; border: 1px solid var(--border);
     background: transparent; color: var(--text2);
-    font-family: 'Georgia', serif; font-size: 0.74rem;
+    font-family: 'Inter', -apple-system, sans-serif; font-size: 0.74rem;
     cursor: pointer; transition: all 0.15s; border-radius: 2px; letter-spacing: 0.03em;
   }
   .btn:hover { border-color: var(--blue2); color: var(--silver); }
@@ -211,7 +214,7 @@
   .filter-tab {
     padding: 0.25rem 0.7rem; border: 1px solid var(--border);
     background: transparent; color: var(--text2); font-size: 0.7rem;
-    cursor: pointer; border-radius: 20px; transition: all 0.15s; font-family: 'Georgia', serif;
+    cursor: pointer; border-radius: 20px; transition: all 0.15s; font-family: 'Inter', -apple-system, sans-serif;
   }
   .filter-tab:hover { border-color: var(--blue); color: var(--silver); }
   .filter-tab.active { border-color: var(--blue2); color: var(--blue2); background: rgba(90,138,220,0.08); }
@@ -224,7 +227,7 @@
     transition: border-color 0.15s;
   }
   .search-bar:focus-within { border-color: var(--accent); }
-  .search-bar input { background: transparent; border: none; color: var(--white); font-family: 'Georgia', serif; font-size: 0.78rem; flex: 1; }
+  .search-bar input { background: transparent; border: none; color: var(--white); font-family: 'Inter', -apple-system, sans-serif; font-size: 0.78rem; flex: 1; }
   .search-bar input:focus { outline: none; }
   .search-bar input::placeholder { color: var(--text2); }
 
@@ -293,7 +296,7 @@
 
   /* CODEX */
   .codex-item { margin-bottom: 0.35rem; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
-  .codex-btn { width: 100%; padding: 0.8rem 1rem; background: var(--bg3); border: none; color: var(--text); font-family: 'Georgia', serif; font-size: 0.8rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; }
+  .codex-btn { width: 100%; padding: 0.8rem 1rem; background: var(--bg3); border: none; color: var(--text); font-family: 'Inter', -apple-system, sans-serif; font-size: 0.8rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.15s; }
   .codex-btn:hover { background: rgba(90,138,220,0.05); }
   .codex-btn.open { color: var(--silver2); background: rgba(90,138,220,0.06); }
   .codex-arrow { margin-left: auto; font-size: 0.65rem; color: var(--text2); transition: transform 0.2s; }
@@ -312,7 +315,7 @@
   .wl-roles { display: flex; gap: 0.25rem; flex-wrap: wrap; }
   .role-badge { font-size: 0.56rem; padding: 0.08rem 0.38rem; border-radius: 2px; border: 1px solid; }
   .r-admin { color: #dd8833; border-color: #6a4010; background: rgba(100,60,10,0.15); }
-  .r-veilleur { color: var(--blue2); border-color: var(--accent); background: rgba(40,60,100,0.15); }
+  .r-inspecteur { color: var(--blue2); border-color: var(--accent); background: rgba(40,60,100,0.15); }
   .r-sphere { color: #9a6aee; border-color: #4a3080; background: rgba(60,40,100,0.15); }
 
   /* SECRET */
@@ -320,7 +323,7 @@
   .secret-top h2 { color: #9a6aee; letter-spacing: 0.18em; font-size: 0.9rem; font-weight: normal; }
   .secret-top p { font-size: 0.68rem; color: #352850; margin-top: 0.35rem; }
   .rule-card { background: var(--bg3); border: 1px solid #1e1840; border-radius: 2px; margin-bottom: 0.35rem; overflow: hidden; }
-  .rule-btn { width: 100%; padding: 0.75rem 1rem; background: transparent; border: none; color: #504060; font-family: 'Georgia', serif; font-size: 0.78rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: color 0.15s; }
+  .rule-btn { width: 100%; padding: 0.75rem 1rem; background: transparent; border: none; color: #504060; font-family: 'Inter', -apple-system, sans-serif; font-size: 0.78rem; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.6rem; transition: color 0.15s; }
   .rule-btn:hover { color: #9a6aee; }
   .rule-num { font-size: 0.62rem; color: #302248; font-style: italic; min-width: 1rem; }
   .rule-body { padding: 0.7rem 1rem; font-size: 0.76rem; color: var(--text); line-height: 1.8; border-top: 1px solid #1e1840; display: none; }
@@ -340,7 +343,7 @@
   .modal-close:hover { color: var(--red); }
   .form-group { margin-bottom: 0.8rem; }
   .form-group label { display: block; font-size: 0.64rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.28rem; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.48rem 0.65rem; background: var(--bg3); border: 1px solid var(--border); color: var(--white); font-family: 'Georgia', serif; font-size: 0.78rem; border-radius: 2px; transition: border-color 0.15s; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.48rem 0.65rem; background: var(--bg3); border: 1px solid var(--border); color: var(--white); font-family: 'Inter', -apple-system, sans-serif; font-size: 0.78rem; border-radius: 2px; transition: border-color 0.15s; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--blue); }
   .form-group select option { background: var(--bg3); }
   .form-group textarea { resize: vertical; min-height: 75px; line-height: 1.6; }
@@ -404,7 +407,7 @@
   <div class="splash-top">
     <div class="splash-sword">⚔</div>
   </div>
-  <div class="splash-title">CODEX<br>OBSCURA</div>
+  <div class="splash-title">DEMONARIUM</div>
   <div class="splash-sub">Archives des Pourfendeurs de Démons</div>
   <div class="splash-divider"></div>
   <div class="splash-enter">— Entrer dans les Archives —</div>
@@ -417,15 +420,15 @@
   <nav id="sidebar">
     <div class="sidebar-logo">
       <div class="logo-icon">⚔</div>
-      <div class="logo-title">CODEX OBSCURA</div>
+      <div class="logo-title">DEMONARIUM</div>
       <div class="logo-sub">Archives des Pourfendeurs</div>
     </div>
     <div class="sidebar-nav">
       <div class="nav-item active" onclick="showView('dashboard')"><span class="nav-icon">🏛</span>Tableau de Bord</div>
+      <div class="nav-item" onclick="showView('codex')"><span class="nav-icon">📖</span>Codex</div>
       <div class="nav-item" onclick="showView('registre')"><span class="nav-icon">⚔</span>Registre <span class="nav-badge" id="badge-registre">0</span></div>
       <div class="nav-item" onclick="showView('cibles')"><span class="nav-icon">🎯</span>Cibles Prioritaires <span class="nav-badge" id="badge-cibles">0</span></div>
       <div class="nav-item" onclick="showView('missions')"><span class="nav-icon">📋</span>Missions <span class="nav-badge" id="badge-missions">0</span></div>
-      <div class="nav-item" onclick="showView('codex')"><span class="nav-icon">📖</span>Codex</div>
       <div class="nav-item" onclick="showView('historique')"><span class="nav-icon">🕰</span>Historique</div>
       <div class="nav-item" id="nav-admin" style="display:none" onclick="showView('admin')"><span class="nav-icon">🛡</span>Administration</div>
       <div class="nav-sep">Accès Restreint</div>
@@ -460,7 +463,7 @@
       <div class="view active" id="view-dashboard">
         <div class="dash-hero">
           <div class="dash-hero-sword">⚔</div>
-          <div class="dash-hero-title">CODEX OBSCURA</div>
+          <div class="dash-hero-title">DEMONARIUM</div>
           <div class="dash-hero-sub">Registre Suprême de l'Ordre des Pourfendeurs</div>
           <div class="dash-hero-line"></div>
         </div>
@@ -771,7 +774,7 @@
     <div class="form-group"><label>Nom affiché</label><input type="text" id="user-nom" placeholder="Nom ou pseudo"></div>
     <div class="form-group"><label>Rôles</label>
       <div>
-        <label class="cb-label"><input type="checkbox" id="role-veilleur"><div><div>Veilleur</div><div class="cb-desc">Registre, cibles, missions</div></div></label>
+        <label class="cb-label"><input type="checkbox" id="role-inspecteur"><div><div>Inspecteur</div><div class="cb-desc">Registre, cibles, missions</div></div></label>
         <label class="cb-label"><input type="checkbox" id="role-sphere"><div><div>Sphère Secrète</div><div class="cb-desc">Opérations secrètes</div></div></label>
         <label class="cb-label"><input type="checkbox" id="role-adminsphere"><div><div>Admin Sphère</div><div class="cb-desc">Historique + gestion</div></div></label>
         <label class="cb-label"><input type="checkbox" id="role-admin"><div><div>Admin</div><div class="cb-desc">Accès complet</div></div></label>
@@ -1215,7 +1218,7 @@ function renderWhitelist(){
   if(!items.length){list.innerHTML='<div class="empty-state" style="padding:1rem">Aucun éditeur.</div>';return;}
   list.innerHTML=items.map(([id,u])=>{
     const roleHtml=(u.roles||[]).map(r=>{
-      const cls={admin:'r-admin',veilleur:'r-veilleur',sphere:'r-sphere',adminsphere:'r-admin'}[r]||'';
+      const cls={admin:'r-admin',inspecteur:'r-inspecteur',sphere:'r-sphere',adminsphere:'r-admin'}[r]||'';
       return `<span class="role-badge ${cls}">${r}</span>`;
     }).join('');
     return `<div class="wl-item">
@@ -1233,7 +1236,7 @@ window.addUser=async()=>{
   const steamId=document.getElementById('user-steamid').value.trim();
   const name=document.getElementById('user-nom').value.trim();
   if(!steamId.match(/^[0-9]{17}/)||!name){toast('Steam ID et nom requis','error');return;}
-  const roles=['veilleur','sphere','adminsphere','admin'].filter(r=>document.getElementById('role-'+r)?.checked);
+  const roles=['inspecteur','sphere','adminsphere','admin'].filter(r=>document.getElementById('role-'+r)?.checked);
   if(!roles.length){toast('Au moins un rôle requis','error');return;}
   await set(ref(db,'whitelist/'+steamId),{name,roles,createdAt:Date.now()});
   logAction('add','Whitelist',name); toast(name+' ajouté','success');
@@ -1248,14 +1251,14 @@ window.removeUser=async id=>{
 window.openRolesModal=id=>{
   document.getElementById('roles-target-id').value=id;
   const current=state.whitelist[id]?.roles||[];
-  document.getElementById('roles-checks').innerHTML=['veilleur','sphere','adminsphere','admin'].map(r=>
+  document.getElementById('roles-checks').innerHTML=['inspecteur','sphere','adminsphere','admin'].map(r=>
     `<label class="cb-label"><input type="checkbox" id="modal-role-${r}" value="${r}" ${current.includes(r)?'checked':''}><div>${r}</div></label>`
   ).join('');
   openModal('modal-roles');
 };
 window.saveRoles=async()=>{
   const id=document.getElementById('roles-target-id').value;
-  const roles=['veilleur','sphere','adminsphere','admin'].filter(r=>document.getElementById('modal-role-'+r)?.checked);
+  const roles=['inspecteur','sphere','adminsphere','admin'].filter(r=>document.getElementById('modal-role-'+r)?.checked);
   if(!roles.length){toast('Au moins un rôle requis','error');return;}
   await update(ref(db,'whitelist/'+id),{roles});
   logAction('edit','Whitelist',state.whitelist[id]?.name); toast('Rôles mis à jour','success');
@@ -1306,7 +1309,7 @@ window.toggleCodex=i=>{
 // RULES
 function renderRules(){
   const rules=[
-    {title:'Discrétion Absolue',body:"Aucune information relative à la Sphère Secrète ne doit être divulguée à quiconque n'appartenant pas à ses rangs. Cela inclut les Veilleurs et les officiers extérieurs — quelle que soit leur autorité apparente."},
+    {title:'Discrétion Absolue',body:"Aucune information relative à la Sphère Secrète ne doit être divulguée à quiconque n'appartenant pas à ses rangs. Cela inclut les Inspecteurs et les officiers extérieurs — quelle que soit leur autorité apparente."},
     {title:"L'Ombre Avant Tout",body:"La Sphère Secrète n'existe pas officiellement. Ses membres opèrent dans l'anonymat le plus total. Les noms, les visages et les méthodes restent dans l'ombre permanente."},
     {title:"Élimination des Témoins",body:"Tout individu ayant connaissance d'une opération en cours ou de l'existence de la Sphère constitue une menace directe. L'élimination sans sommation est autorisée — et parfois exigée."},
     {title:"Obéissance à la Chaîne",body:"Les ordres provenant des échelons supérieurs de la Sphère sont non négociables. L'exécution prime sur la compréhension. Les doutes se formulent après la mission, jamais pendant."},
