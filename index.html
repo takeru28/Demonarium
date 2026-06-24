@@ -481,7 +481,7 @@
     </div>
     <div class="sidebar-nav">
       <div class="nav-item active" onclick="showView('dashboard')"><span class="nav-icon">🏛</span>Tableau de Bord</div>
-      <div class="nav-item" onclick="showView('codex')"><span class="nav-icon">📖</span>Codex</div>
+      <div class="nav-item" onclick="showView('codex')"><span class="nav-icon">📖</span>Demonarium</div>
       <div class="nav-item" onclick="showView('missions')"><span class="nav-icon">📋</span>Missions <span class="nav-badge" id="badge-missions">0</span></div>
       <div class="nav-item" onclick="showView('cibles')"><span class="nav-icon">🎯</span>Cibles Prioritaires <span class="nav-badge" id="badge-cibles">0</span></div>
       <div class="nav-item" onclick="showView('registre')"><span class="nav-icon">⚔</span>Registre <span class="nav-badge" id="badge-registre">0</span></div>
@@ -577,7 +577,7 @@
 
       <!-- CODEX -->
       <div class="view" id="view-codex">
-        <div class="section-header"><h2>📖 Codex de l'Ordre</h2></div>
+        <div class="section-header"><h2>📖 Demonarium de l'Ordre</h2></div>
         <p style="font-size:0.72rem;color:var(--text2);font-style:italic;margin-bottom:1.1rem">Connaissance réservée aux initiés de l'Ordre</p>
         <div id="codex-sections"></div>
       </div>
@@ -720,18 +720,14 @@
       </select>
     </div>
     <div class="form-group">
-      <label>Souffle</label>
+      <label>Pouvoir Sanguinaire</label>
       <select id="pourf-souffle">
-        <option>Souffle de l'Eau</option>
-        <option>Souffle de la Flamme</option>
-        <option>Souffle de la Foudre</option>
-        <option>Souffle de la Fleur</option>
-        <option>Souffle de la Roche</option>
-        <option>Souffle de la Brume</option>
-        <option>Souffle du Son</option>
-        <option>Souffle du Vent</option>
-        <option>Souffle de l'Insecte</option>
-        <option>Souffle du Serpent</option>
+        <option>Pouvoir Sanguinaire de l'Acide</option>
+        <option>Pouvoir Sanguinaire de la Flamme Spectrale</option>
+        <option>Pouvoir Sanguinaire de la Glace</option>
+        <option>Pouvoir Sanguinaire de la Ronce</option>
+        <option>Pouvoir Sanguinaire de la Résonance</option>
+        <option>Pouvoir Sanguinaire du Sombréclair</option>
         <option>Autre / Dérivé</option>
       </select>
     </div>
@@ -743,8 +739,8 @@
         <option value="retired">Retraité</option>
       </select>
     </div>
-    <div class="form-group"><label>Jours de service</label><input type="number" id="pourf-jours" placeholder="0" min="0"></div>
-    <div class="form-group"><label>Brigade / Unité</label><input type="text" id="pourf-brigade" placeholder="Nom de l'unité"></div>
+    <div class="form-group"><label>Année</label><input type="number" id="pourf-jours" placeholder="0" min="0"></div>
+    <div class="form-group"><label>Sphère</label><input type="text" id="pourf-brigade" placeholder="Nom de la sphère"></div>
     <div class="form-group"><label>Observations</label><textarea id="pourf-obs" placeholder="Notes, observations…"></textarea></div>
     <input type="hidden" id="pourf-id">
     <div class="form-actions">
@@ -924,7 +920,7 @@ const VIEWS = {
   registre:['⚔','Registre des Pourfendeurs'],
   cibles:['🎯','Cibles Prioritaires'],
   missions:['📋','Tableau des Missions'],
-  codex:['📖','Codex de l\'Ordre'],
+  codex:['📖','Demonarium de l\'Ordre'],
   historique:['🕰','Historique'],
   admin:['🛡','Administration'],
   sphere:['⬛','Sphère Secrète'],
@@ -1049,7 +1045,7 @@ function renderRegistre(){
         </div>
       </div>
       ${p.brigade?`<div class="card-info-row"><span>🛡</span><span>${p.brigade}</span></div>`:''}
-      ${p.jours?`<div class="card-info-row"><span>📅</span><span>${p.jours} jours de service</span></div>`:''}
+      ${p.jours?`<div class="card-info-row"><span>📅</span><span>Année ${p.jours}</span></div>`:''}
       ${p.obs?`<div class="card-obs">${p.obs}</div>`:''}
       <div class="card-footer"><span></span>
         <div class="card-actions">
