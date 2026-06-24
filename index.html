@@ -290,7 +290,17 @@
     background: var(--bg2); border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem; flex-shrink: 0;
+    overflow: hidden;
   }
+  .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-upload-row { display: flex; align-items: center; gap: 0.7rem; }
+  .photo-preview {
+    width: 52px; height: 52px; border-radius: 4px; flex-shrink: 0;
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: var(--text2); overflow: hidden;
+  }
+  .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
   .card-name { font-size: 0.88rem; color: var(--white); font-weight: bold; line-height: 1.2; }
   .card-rank { font-size: 0.65rem; color: var(--blue2); margin-top: 0.15rem; letter-spacing: 0.04em; }
   .card-breath { font-size: 0.63rem; color: var(--text2); margin-top: 0.08rem; }
@@ -680,6 +690,18 @@
     <div class="modal-title" id="modal-pourf-title">⚔ Nouvelle Fiche de Service</div>
     <div class="form-group"><label>Nom du Pourfendeur</label><input type="text" id="pourf-nom" placeholder="Nom complet"></div>
     <div class="form-group">
+      <label>Photo</label>
+      <div class="photo-upload-row">
+        <div class="photo-preview" id="pourf-photo-preview">⚔</div>
+        <div style="flex:1">
+          <input type="file" id="pourf-photo-input" accept="image/*" style="display:none" onchange="handlePourfPhoto(event)">
+          <button type="button" class="btn btn-sm" onclick="document.getElementById('pourf-photo-input').click()">📁 Choisir une image</button>
+          <button type="button" class="btn btn-sm btn-red" id="pourf-photo-remove" style="display:none" onclick="removePourfPhoto()">✕ Retirer</button>
+        </div>
+      </div>
+      <input type="hidden" id="pourf-photo">
+    </div>
+    <div class="form-group">
       <label>Rang</label>
       <select id="pourf-rang">
         <option>Maître des Pourfendeurs</option>
@@ -1019,7 +1041,7 @@ function renderRegistre(){
     return `<div class="member-card">
       <span class="card-status ${sc}">${sl}</span>
       <div class="card-header">
-        <div class="card-avatar">⚔</div>
+        <div class="card-avatar">${p.photo?`<img src="${p.photo}">`:'⚔'}</div>
         <div>
           <div class="card-name">${p.nom||'—'}</div>
           <div class="card-rank">${p.rang||'—'}</div>
@@ -1039,7 +1061,14 @@ function renderRegistre(){
 }
 
 window.openModal=id=>{
-  if(id==='modal-pourf'){ state.editingPourId=null; document.getElementById('modal-pourf-title').textContent='⚔ Nouvelle Fiche de Service'; ['pourf-nom','pourf-jours','pourf-brigade','pourf-obs'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';}); }
+  if(id==='modal-pourf'){
+    state.editingPourId=null;
+    document.getElementById('modal-pourf-title').textContent='⚔ Nouvelle Fiche de Service';
+    ['pourf-nom','pourf-jours','pourf-brigade','pourf-obs','pourf-photo'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';});
+    const pi=document.getElementById('pourf-photo-input'); if(pi) pi.value='';
+    document.getElementById('pourf-photo-preview').innerHTML='⚔';
+    document.getElementById('pourf-photo-remove').style.display='none';
+  }
   if(id==='modal-mission'){ state.editingMissionId=null; document.getElementById('modal-mission-title').textContent='📋 Nouvelle Mission'; ['mission-titre','mission-membres','mission-desc'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';}); }
   document.getElementById(id).classList.remove('hidden');
 };
@@ -1056,7 +1085,32 @@ window.editPourf=id=>{
   document.getElementById('pourf-jours').value=p.jours||'';
   document.getElementById('pourf-brigade').value=p.brigade||'';
   document.getElementById('pourf-obs').value=p.obs||'';
+  document.getElementById('pourf-photo').value=p.photo||'';
+  if(p.photo){
+    document.getElementById('pourf-photo-preview').innerHTML=`<img src="${p.photo}">`;
+    document.getElementById('pourf-photo-remove').style.display='inline-block';
+  } else {
+    document.getElementById('pourf-photo-preview').innerHTML='⚔';
+    document.getElementById('pourf-photo-remove').style.display='none';
+  }
   document.getElementById('modal-pourf').classList.remove('hidden');
+};
+window.handlePourfPhoto=event=>{
+  const file=event.target.files[0]; if(!file) return;
+  if(file.size>1500000){toast('Image trop lourde (max ~1.5 Mo)','error');event.target.value='';return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('pourf-photo').value=e.target.result;
+    document.getElementById('pourf-photo-preview').innerHTML=`<img src="${e.target.result}">`;
+    document.getElementById('pourf-photo-remove').style.display='inline-block';
+  };
+  reader.readAsDataURL(file);
+};
+window.removePourfPhoto=()=>{
+  document.getElementById('pourf-photo').value='';
+  document.getElementById('pourf-photo-input').value='';
+  document.getElementById('pourf-photo-preview').innerHTML='⚔';
+  document.getElementById('pourf-photo-remove').style.display='none';
 };
 window.savePourf=async()=>{
   if(!state.user){toast('Connexion requise','error');return;}
@@ -1068,6 +1122,7 @@ window.savePourf=async()=>{
     jours:document.getElementById('pourf-jours').value,
     brigade:document.getElementById('pourf-brigade').value.trim(),
     obs:document.getElementById('pourf-obs').value.trim(),
+    photo:document.getElementById('pourf-photo').value||'',
     updatedAt:Date.now(),
   };
   if(!data.nom){toast('Nom requis','error');return;}
