@@ -1253,7 +1253,6 @@ function updateUI(){
   document.getElementById('btn-login').style.display=isEditor?'none':'';
   document.getElementById('btn-logout').style.display=isEditor?'':'none';
   document.getElementById('nav-admin').style.display=isAdmin?'':'none';
-  document.getElementById('nav-sphere').classList.toggle('unlocked',hasSphere);
   document.getElementById('sidebar-user').innerHTML=state.user?`<span>${state.user.name}</span> — ${(state.user.roles||[]).join(', ')}`:'◈ Lecture seule';
   const mb=document.getElementById('mode-badge');
   const mb2=document.getElementById('mode-badge2');
