@@ -1577,7 +1577,7 @@ window.openDetailModal=id=>{
   // Tags rang + souffle
   let tags='';
   if(p.rang) tags+=`<span class="fd-tag">${p.rang}</span>`;
-  if(p.souffle) tags+=`<span class="fd-tag souffle">🌊 ${p.souffle}</span>`;
+  if(p.souffle) tags+=`<span class="fd-tag souffle">${p.souffle}</span>`;
   document.getElementById('fd-tags').innerHTML=tags;
 
   // Photo
