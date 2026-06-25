@@ -724,7 +724,7 @@
     transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease, border-top-width 0.3s ease, opacity 0.3s ease;
     opacity: 0;
   }
-  .codex-body.open { max-height: 600px; padding: 1.1rem 1.3rem; border-top-width: 1px; opacity: 1; }
+  .codex-body.open { max-height: 3000px; padding: 1.1rem 1.3rem; border-top-width: 1px; opacity: 1; }
   .codex-body strong { color: var(--silver2); font-size: 1.05rem; }
 
   /* ADMIN */
@@ -1907,7 +1907,19 @@ function renderCodex(){
 <strong>Pouvoir Sanguinaire de la Glace ⛰️</strong> — Résistance, force hors du commun, technique sanguinaire rapide et forte.<br>
 <strong>Pouvoir Sanguinaire de la Ronce 🌷</strong> — Résistance multipliée, forte aura.`},
     {icon:'🌷',title:'La Glycine',body:`La glycine possède des feuilles composées de plusieurs folioles et des tiges ligneuses qui s'enroulent autour des supports. La glycine commune fleurit au printemps, généralement entre avril et mai, et ses fleurs sont regroupées en grappes denses.<br><br>
-Ces fleurs, ont un pouvoir spécifique. Elles permettent de tuer des démons juste en rentrant en contact avec eux.`}
+Ces fleurs, ont un pouvoir spécifique. Elles permettent de tuer des démons juste en rentrant en contact avec eux.`},
+    {icon:'🏴',title:"Les Brigades de l'Ordre",body:`<strong>Brigade Judiciaire ⚖️</strong><br>
+La brigade judiciaire sert à faire régner la justice et la paix. C'est elle qui maintient l'ordre chez les Pourfendeurs et est capable de vous sanctionner à tout moment.<br><br>
+<strong>Brigade Anti-Occulte 🔮</strong><br>
+La brigade anti occulte sert à lutter contre les pratiques obscures et les phénomènes liés à l'occultisme. Elle a pour mission de contrer les rituels et pouvoirs interdits créés par certains démons, afin de protéger l'équilibre et la sécurité des Pourfendeurs.<br><br>
+<strong>Brigade Instructeur 🎓</strong><br>
+La brigade instruction a comme son nom l'indique consiste à former les nouveaux aspirants de chaque souffle, seul ceux-ci sont habilités à former les nouveaux aspirants.<br><br>
+<strong>Brigade Finance &amp; Relation 💰</strong><br>
+La brigade finance et relation sert à gérer la trésorerie de l'Ordre des Pourfendeurs ainsi que ses relations extérieures. Elle veille à la bonne gestion des ressources et au maintien de liens solides entre les membres et les différentes entités alliées.<br><br>
+<strong>Brigade Médical ⚕️</strong><br>
+La brigade médicale réunis les meilleurs médecin de l'ordre des pourfendeur, il y a plusieurs sous catégorie de spécialité directement dans la brigade médicale. Vous pouvez mener des expéditions et faire des voyages afin d'accroitre vos connaissance sur la médecine, effectuer des récolte poussé, vous pouvez en tant que membre de la brigade médicale demander des captures de démons afin de mener vos recherche, vous pouvez coopérer avec le corps scientifique afin de demander une capture de démon et d'essayer vos produits sur un "être vivant".<br><br>
+<strong>Brigade Scientifique 🧪</strong><br>
+La brigade Scientifique est basé sur les recherches, vous pouvez faire de nombreuse découverte grâce a vos recherche qui seront par la suite utile a l'ordre des pourfendeurs, votre nom ne sera jamais oublié et vous figurerait sur certain document grâce a vos découverte. Vous aussi pouvez mettre au points des poisons ainsi que des remèdes, vous pouvez aussi étudier les poisons de certaine créature ou démons pour par la suite crée des remèdes, mais ne vous limitez pas a ca votre imagination sera votre seul limite n'hésiter pas a proposer vos recherche au nom de la science.`}
   ];
   document.getElementById('codex-sections').innerHTML=sections.map((s,i)=>`
     <div class="codex-item">
