@@ -362,9 +362,9 @@
   #modal-detail .modal {
     max-width: 820px; width: 95vw; padding: 0; overflow: hidden;
     border-radius: 2px;
-    border: 1px solid rgba(180,130,50,0.35);
+    border: 1px solid rgba(58,100,200,0.35);
     box-shadow: 0 0 0 1px rgba(100,70,20,0.2), 0 30px 80px rgba(0,0,0,0.85), inset 0 0 60px rgba(0,0,0,0.4);
-    background: #0a0900;
+    background: #07081a;
   }
 
   /* Coins décoratifs */
@@ -372,42 +372,42 @@
   #modal-detail .modal::after {
     content: ''; position: absolute; width: 18px; height: 18px; z-index: 20; pointer-events: none;
   }
-  #modal-detail .modal::before { top: -1px; left: -1px; border-top: 2px solid #c8a030; border-left: 2px solid #c8a030; }
-  #modal-detail .modal::after  { bottom: -1px; right: -1px; border-bottom: 2px solid #c8a030; border-right: 2px solid #c8a030; }
+  #modal-detail .modal::before { top: -1px; left: -1px; border-top: 2px solid var(--blue2); border-left: 2px solid var(--blue2); }
+  #modal-detail .modal::after  { bottom: -1px; right: -1px; border-bottom: 2px solid var(--blue2); border-right: 2px solid var(--blue2); }
 
   /* Header — titre + breadcrumb */
   .fd-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0.6rem 1.2rem 0.5rem;
-    border-bottom: 1px solid rgba(180,130,50,0.2);
+    border-bottom: 1px solid rgba(58,100,200,0.2);
     background: rgba(0,0,0,0.5);
   }
   .fd-breadcrumb {
     font-family: 'Cinzel Decorative', serif; font-size: 0.52rem;
-    color: rgba(180,130,50,0.55); letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(58,100,200,0.55); letter-spacing: 0.22em; text-transform: uppercase;
   }
   .fd-breadcrumb span { color: rgba(180,130,50,0.85); }
   .fd-close {
-    background: none; border: 1px solid rgba(180,130,50,0.25); color: rgba(180,130,50,0.6);
+    background: none; border: 1px solid rgba(58,100,200,0.25); color: rgba(58,100,200,0.6);
     width: 22px; height: 22px; border-radius: 1px; cursor: pointer; font-size: 0.65rem;
     display: flex; align-items: center; justify-content: center; transition: all 0.15s;
   }
-  .fd-close:hover { border-color: rgba(180,130,50,0.7); color: #c8a030; }
+  .fd-close:hover { border-color: rgba(58,100,200,0.7); color: var(--blue2); }
 
   /* Corps principal */
   .fd-body {
     display: flex; gap: 0; min-height: 340px;
-    background: linear-gradient(160deg, #0e0c07 0%, #080600 100%);
+    background: linear-gradient(160deg, #08091a 0%, #0b0c1e 100%);
     position: relative;
   }
 
   /* Photo */
   .fd-photo {
     width: 200px; flex-shrink: 0; position: relative; overflow: hidden;
-    background: #050400; border-right: 1px solid rgba(180,130,50,0.15);
+    background: #05060e; border-right: 1px solid rgba(58,100,200,0.15);
     cursor: zoom-in;
   }
-  .fd-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.4s; filter: sepia(0.1) brightness(0.9); }
+  .fd-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.4s; filter: brightness(0.95); }
   .fd-photo:hover img { transform: scale(1.04); }
   .fd-photo-placeholder {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -415,7 +415,7 @@
   }
   .fd-photo::after {
     content: ''; position: absolute; right: 0; inset-block: 0; width: 40px;
-    background: linear-gradient(90deg, transparent, #0a0900);
+    background: linear-gradient(90deg, transparent, #07081a);
     pointer-events: none;
   }
 
@@ -423,7 +423,7 @@
   .fd-watermark {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
     font-size: 8rem; opacity: 0.03; pointer-events: none; user-select: none;
-    color: #c8a030;
+    color: var(--blue2);
   }
 
   /* Infos */
@@ -436,8 +436,8 @@
   /* Nom */
   .fd-name {
     font-family: 'Cinzel Decorative', serif; font-size: 2rem; font-weight: 700;
-    color: #e8dfc0; line-height: 1.1; margin-bottom: 0.6rem;
-    text-shadow: 0 0 40px rgba(200,160,48,0.3);
+    color: var(--white); line-height: 1.1; margin-bottom: 0.6rem;
+    text-shadow: 0 0 40px rgba(90,138,220,0.35);
     letter-spacing: 0.04em;
   }
 
@@ -445,10 +445,10 @@
   .fd-tags { display: flex; gap: 0.5rem; margin-bottom: 1.3rem; flex-wrap: wrap; }
   .fd-tag {
     display: inline-flex; align-items: center; gap: 0.35rem;
-    padding: 0.22rem 0.75rem; border: 1px solid rgba(180,130,50,0.4);
-    background: rgba(180,130,50,0.06);
+    padding: 0.22rem 0.75rem; border: 1px solid rgba(58,100,200,0.4);
+    background: rgba(58,100,200,0.06);
     font-family: 'Cinzel Decorative', serif; font-size: 0.55rem;
-    color: #c8a030; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue2); letter-spacing: 0.12em; text-transform: uppercase;
     border-radius: 1px;
   }
   .fd-tag.souffle { border-color: rgba(150,180,220,0.3); background: rgba(90,120,180,0.06); color: #8aacdc; }
@@ -456,30 +456,30 @@
   /* Séparateur doré */
   .fd-sep {
     width: 100%; height: 1px; margin: 0.2rem 0 1.1rem;
-    background: linear-gradient(90deg, rgba(180,130,50,0.5), rgba(180,130,50,0.1) 60%, transparent);
+    background: linear-gradient(90deg, rgba(58,100,200,0.5), rgba(58,100,200,0.1) 60%, transparent);
     position: relative;
   }
   .fd-sep::before {
     content: '◆'; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    color: #c8a030; font-size: 0.45rem; line-height: 1;
+    color: var(--blue2); font-size: 0.45rem; line-height: 1;
   }
 
   /* Grille stats */
   .fd-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
   .fd-stat {
-    border: 1px solid rgba(180,130,50,0.25); background: rgba(180,130,50,0.04);
+    border: 1px solid rgba(58,100,200,0.25); background: rgba(58,100,200,0.04);
     padding: 0.6rem 0.75rem; text-align: center; border-radius: 1px;
     transition: border-color 0.15s;
   }
-  .fd-stat:hover { border-color: rgba(180,130,50,0.5); }
+  .fd-stat:hover { border-color: rgba(58,100,200,0.5); }
   .fd-stat-label {
     font-family: 'Cinzel Decorative', serif; font-size: 0.48rem;
-    color: rgba(180,130,50,0.5); letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(58,100,200,0.5); letter-spacing: 0.18em; text-transform: uppercase;
     margin-bottom: 0.3rem;
   }
   .fd-stat-val {
     font-family: 'Cinzel Decorative', serif; font-size: 1.1rem;
-    color: #d4c090; font-weight: 700; line-height: 1;
+    color: var(--silver2); font-weight: 700; line-height: 1;
   }
   .fd-stat.statut-alive .fd-stat-val { color: #6ab87a; }
   .fd-stat.statut-dead  .fd-stat-val { color: #c05a4a; }
@@ -488,31 +488,31 @@
   /* Grille référents */
   .fd-refs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   .fd-ref {
-    border: 1px solid rgba(180,130,50,0.2); background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(58,100,200,0.2); background: rgba(0,0,0,0.25);
     padding: 0.55rem 0.75rem; border-radius: 1px;
   }
   .fd-ref-label {
     font-family: 'Cinzel Decorative', serif; font-size: 0.44rem;
-    color: rgba(180,130,50,0.45); letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(58,100,200,0.45); letter-spacing: 0.18em; text-transform: uppercase;
     margin-bottom: 0.25rem;
   }
   .fd-ref-val {
-    font-family: 'Cinzel Decorative', serif; font-size: 0.78rem; color: #c8b888;
+    font-family: 'Cinzel Decorative', serif; font-size: 0.78rem; color: var(--silver);
   }
 
   /* Observations */
   .fd-obs {
     padding: 1rem 1.8rem 1.1rem;
-    border-top: 1px solid rgba(180,130,50,0.15);
+    border-top: 1px solid rgba(58,100,200,0.15);
     background: rgba(0,0,0,0.3);
   }
   .fd-obs-label {
     font-family: 'Cinzel Decorative', serif; font-size: 0.45rem;
-    color: rgba(180,130,50,0.4); letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(58,100,200,0.4); letter-spacing: 0.22em; text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
   .fd-obs-text {
-    font-family: 'Cinzel Decorative', serif; font-size: 0.68rem; color: #9a9278;
+    font-family: 'Cinzel Decorative', serif; font-size: 0.68rem; color: var(--text);
     line-height: 1.9;
   }
 
@@ -520,21 +520,21 @@
   .fd-footer {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.65rem 1.8rem;
-    border-top: 1px solid rgba(180,130,50,0.15);
+    border-top: 1px solid rgba(58,100,200,0.15);
     background: rgba(0,0,0,0.45);
   }
   .fd-footer-id {
     font-family: 'Cinzel Decorative', serif; font-size: 0.42rem;
-    color: rgba(180,130,50,0.25); letter-spacing: 0.2em;
+    color: rgba(58,100,200,0.25); letter-spacing: 0.2em;
   }
   .fd-edit-btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.38rem 1rem; border: 1px solid rgba(180,130,50,0.45);
-    background: rgba(180,130,50,0.07); color: #c8a030;
+    padding: 0.38rem 1rem; border: 1px solid rgba(58,100,200,0.45);
+    background: rgba(58,100,200,0.07); color: var(--blue2);
     font-family: 'Cinzel Decorative', serif; font-size: 0.5rem;
     letter-spacing: 0.12em; cursor: pointer; border-radius: 1px; transition: all 0.15s;
   }
-  .fd-edit-btn:hover { background: rgba(180,130,50,0.15); border-color: #c8a030; }
+  .fd-edit-btn:hover { background: rgba(58,100,200,0.15); border-color: var(--blue2); }
   .fd-del-btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.38rem 1rem; border: 1px solid rgba(180,60,50,0.4);
@@ -556,7 +556,7 @@
   #photo-zoom-overlay img {
     max-width: 88vw; max-height: 88vh; object-fit: contain;
     border: 1px solid rgba(180,130,50,0.3);
-    box-shadow: 0 0 60px rgba(180,130,50,0.15);
+    box-shadow: 0 0 60px rgba(58,100,200,0.15);
     border-radius: 2px;
   }
 
@@ -1230,8 +1230,8 @@
   <div class="modal" style="padding:0;position:relative">
 
     <!-- Coins déco extra -->
-    <div style="position:absolute;top:-1px;right:-1px;width:18px;height:18px;border-top:2px solid #c8a030;border-right:2px solid #c8a030;z-index:20;pointer-events:none"></div>
-    <div style="position:absolute;bottom:-1px;left:-1px;width:18px;height:18px;border-bottom:2px solid #c8a030;border-left:2px solid #c8a030;z-index:20;pointer-events:none"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:18px;height:18px;border-top:2px solid var(--blue2);border-right:2px solid var(--blue2);z-index:20;pointer-events:none"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:18px;height:18px;border-bottom:2px solid var(--blue2);border-left:2px solid var(--blue2);z-index:20;pointer-events:none"></div>
 
     <!-- Header breadcrumb -->
     <div class="fd-header">
