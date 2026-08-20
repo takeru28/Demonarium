@@ -1363,7 +1363,7 @@ let state = {
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('codex_session');
   if (saved) { try { state.user = JSON.parse(saved); } catch(e){} }
-  onValue(ref(db,'registre'), s => { state.registre=s.val()||{}; renderRegistre(); updateStats(); });
+  onValue(ref(db,'registre'), s => { const v=s.val(); if(v!==undefined){ state.registre=v||{}; renderRegistre(); updateStats(); }});
   onValue(ref(db,'cibles'), s => { state.cibles=s.val()||{}; renderCibles(); updateStats(); });
   onValue(ref(db,'missions'), s => { state.missions=s.val()||{}; renderMissions(); updateStats(); });
   onValue(ref(db,'ops'), s => { state.ops=s.val()||{}; renderOps(); });
@@ -1495,13 +1495,16 @@ window.searchRegistre=q=>{ state.registreSearch=q.toLowerCase(); renderRegistre(
 
 function renderRegistre(){
   const list=document.getElementById('registre-list');
-  let items=Object.entries(state.registre);
+  if(!list) return;
+  let items=Object.entries(state.registre||{});
   if(state.registreFilter!=='all') items=items.filter(([,v])=>v.statut===state.registreFilter);
   if(state.registreSearch) items=items.filter(([,v])=>v.nom?.toLowerCase().includes(state.registreSearch));
   if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">⚔</span>Aucun pourfendeur enregistré.</div>';return;}
   list.innerHTML=items.map(([id,p])=>{
+    if(!p||!p.nom) return '';
     const sc={alive:'status-alive',dead:'status-dead',retired:'status-retired'}[p.statut]||'status-alive';
     const sl={alive:'● En service',dead:'✝ Décédé',retired:'◈ Retraité'}[p.statut]||p.statut;
+    const hasBody=p.obs||state.user;
     return `<div class="member-card" onclick="openDetailModal('${id}')">
       <span class="card-status ${sc}">${sl}</span>
       <div class="card-header">
@@ -1514,12 +1517,12 @@ function renderRegistre(){
           ${p.jours?`<div class="card-info-row"><span>📅</span><span>Année ${p.jours}</span></div>`:''}
         </div>
       </div>
-      ${p.obs||state.user?`<div class="card-body">
+      ${hasBody?`<div class="card-body">
         ${p.obs?`<div class="card-obs">${p.obs}</div>`:''}
         ${state.user?`<div class="card-footer" style="padding-top:${p.obs?'0.5rem':'0'};border-top:${p.obs?'1px solid var(--border)':'none'};margin-top:${p.obs?'0.5rem':'0'}"><span></span><div class="card-actions"><button class="btn btn-sm" onclick="event.stopPropagation();editPourf('${id}')">✏</button><button class="btn btn-sm btn-red" onclick="event.stopPropagation();deletePourf('${id}')">✕</button></div></div>`:''}
       </div>`:''}
     </div>`;
-  }).join('');
+  }).filter(Boolean).join('');
 }
 
 window.openModal=id=>{
