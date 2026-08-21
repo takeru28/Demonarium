@@ -306,7 +306,7 @@
   .card-info-row { display: flex; align-items: center; gap: 0.45rem; font-size: 0.72rem; color: var(--text2); margin-top: 0.3rem; }
   .card-info-row span:last-child { color: var(--text); }
   .card-body { padding: 0.75rem 1.2rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.15); }
-  .card-obs { font-size: 0.76rem; color: var(--text2); line-height: 1.65; }
+  .card-obs { font-size: 0.76rem; color: var(--text2); line-height: 1.65; white-space: pre-wrap; }
   .card-footer {
     display: flex; align-items: center; justify-content: flex-end;
     padding-top: 0.55rem; margin-top: 0.5rem;
@@ -1132,7 +1132,7 @@
         <option value="retired">Retraité</option>
       </select>
     </div>
-    <div class="form-group"><label>Année</label><input type="number" id="pourf-jours" placeholder="0" min="0"></div>
+    <div class="form-group"><label>Année</label><input type="text" id="pourf-jours" placeholder="ex: An 3, Saison 2..."></div>
     <div class="form-group"><label>Sphère</label><input type="text" id="pourf-brigade" placeholder="Nom de la sphère"></div>
     <div class="form-group"><label>Lune Inférieure Référente</label><input type="text" id="pourf-kinoe" placeholder="Nom de la Lune Inférieure référente"></div>
     <div class="form-group"><label>Lune Supérieure Référente</label><input type="text" id="pourf-pilier" placeholder="Nom de la Lune Supérieure référente"></div>
@@ -1518,7 +1518,7 @@ function renderRegistre(){
         </div>
       </div>
       ${hasBody?`<div class="card-body">
-        ${p.obs?`<div class="card-obs">${p.obs}</div>`:''}
+        ${p.obs?`<div class="card-obs">${p.obs.replace(/\n/g,'<br>')}</div>`:''}
         ${state.user?`<div class="card-footer" style="padding-top:${p.obs?'0.5rem':'0'};border-top:${p.obs?'1px solid var(--border)':'none'};margin-top:${p.obs?'0.5rem':'0'}"><span></span><div class="card-actions"><button class="btn btn-sm" onclick="event.stopPropagation();editPourf('${id}')">✏</button><button class="btn btn-sm btn-red" onclick="event.stopPropagation();deletePourf('${id}')">✕</button></div></div>`:''}
       </div>`:''}
     </div>`;
