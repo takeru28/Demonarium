@@ -930,7 +930,7 @@
         </div>
         <div class="search-bar">
           <span style="color:var(--text2);font-size:0.8rem">⌕</span>
-          <input type="text" placeholder="Rechercher un pourfendeur…" oninput="searchRegistre(this.value)">
+          <input type="text" placeholder="Rechercher un démon…" oninput="searchRegistre(this.value)">
         </div>
         <div class="cards-grid fade-in" id="registre-list"></div>
       </div>
@@ -1070,8 +1070,8 @@
 <div class="modal-overlay hidden" id="modal-pourf">
   <div class="modal modal-lg">
     <button class="modal-close" onclick="closeModal('modal-pourf')">✕</button>
-    <div class="modal-title" id="modal-pourf-title">⚔ Nouvelle Fiche de Service</div>
-    <div class="form-group"><label>Nom du Pourfendeur</label><input type="text" id="pourf-nom" placeholder="Nom complet"></div>
+    <div class="modal-title" id="modal-pourf-title">⚔ Nouveau Démon</div>
+    <div class="form-group"><label>Nom du Démon</label><input type="text" id="pourf-nom" placeholder="Nom complet"></div>
     <div class="form-group">
       <label>Photo</label>
       <div class="photo-upload-row">
@@ -1499,7 +1499,7 @@ function renderRegistre(){
   let items=Object.entries(state.registre||{});
   if(state.registreFilter!=='all') items=items.filter(([,v])=>v.statut===state.registreFilter);
   if(state.registreSearch) items=items.filter(([,v])=>v.nom?.toLowerCase().includes(state.registreSearch));
-  if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">⚔</span>Aucun pourfendeur enregistré.</div>';return;}
+  if(!items.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">⚔</span>Aucun démon enregistré.</div>';return;}
   list.innerHTML=items.map(([id,p])=>{
     if(!p||!p.nom) return '';
     const sc={alive:'status-alive',dead:'status-dead',retired:'status-retired'}[p.statut]||'status-alive';
@@ -1528,7 +1528,7 @@ function renderRegistre(){
 window.openModal=id=>{
   if(id==='modal-pourf'){
     state.editingPourId=null;
-    document.getElementById('modal-pourf-title').textContent='⚔ Nouvelle Fiche de Service';
+    document.getElementById('modal-pourf-title').textContent='⚔ Nouveau Démon';
     ['pourf-nom','pourf-jours','pourf-brigade','pourf-kinoe','pourf-pilier','pourf-obs','pourf-photo'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';})
     const pi=document.getElementById('pourf-photo-input'); if(pi) pi.value='';
     document.getElementById('pourf-photo-preview').innerHTML='⚔';
@@ -1542,7 +1542,7 @@ window.closeModal=id=>document.getElementById(id).classList.add('hidden');
 window.editPourf=id=>{
   const p=state.registre[id]; if(!p) return;
   state.editingPourId=id;
-  document.getElementById('modal-pourf-title').textContent='✏ Modifier la Fiche';
+  document.getElementById('modal-pourf-title').textContent='✏ Modifier le Démon';
   document.getElementById('pourf-nom').value=p.nom||'';
   document.getElementById('pourf-rang').value=p.rang||'';
   document.getElementById('pourf-souffle').value=p.souffle||'';
@@ -1672,7 +1672,7 @@ window.openDetailModal=id=>{
   // Boutons
   const actions=document.getElementById('fd-actions');
   if(state.user){
-    actions.innerHTML=`<button class="fd-edit-btn" onclick="closeModal('modal-detail');editPourf('${id}')">✏ Modifier la Fiche</button><button class="fd-del-btn" onclick="closeModal('modal-detail');deletePourf('${id}')">✕ Supprimer</button>`;
+    actions.innerHTML=`<button class="fd-edit-btn" onclick="closeModal('modal-detail');editPourf('${id}')">✏ Modifier le Démon</button><button class="fd-del-btn" onclick="closeModal('modal-detail');deletePourf('${id}')">✕ Supprimer</button>`;
   } else { actions.innerHTML=''; }
 
   document.getElementById('modal-detail').classList.remove('hidden');
