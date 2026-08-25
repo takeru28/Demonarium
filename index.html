@@ -876,7 +876,8 @@
       <button class="btn btn-sm btn-red" id="btn-logout" style="display:none" onclick="logout()">Déconnexion</button>
       <div class="music-row">
         <span>♪</span>
-        <button id="btn-music" onclick="toggleMusic()" title="Musique">▶</button>
+        <button id="btn-music" onclick="toggleMusic()" title="Play/Pause">▶</button>
+        <span id="music-title" style="font-size:0.6rem;color:#4a5080;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Afternoon of Konoha</span>
         <button onclick="nextTrack()" title="Suivant">⏭</button>
       </div>
     </div>
@@ -1979,8 +1980,30 @@ window.toast=(msg,type='info')=>{
 
 // MUSIC
 let musicPlaying=false;
-window.toggleMusic=()=>{ musicPlaying=!musicPlaying; document.getElementById('btn-music').textContent=musicPlaying?'⏸':'▶'; toast(musicPlaying?'♪ Musique activée':'♪ Pause','info'); };
-window.nextTrack=()=>toast('♪ Piste suivante','info');
+const playlist=[
+  {src:'music1.mp4', title:'Afternoon of Konoha'},
+  {src:'music2.mp4', title:'Sengunba'}
+];
+let currentTrack=0;
+let musicPlaying=false;
+const audio=new Audio();
+audio.src=playlist[0].src;
+audio.loop=false;
+audio.volume=0.4;
+function updateMusicBtn(){ document.getElementById('btn-music').textContent=musicPlaying?'⏸':'▶'; document.getElementById('music-title').textContent=playlist[currentTrack].title; }
+audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%playlist.length; audio.src=playlist[currentTrack].src; audio.play(); updateMusicBtn(); toast(`♪ ${playlist[currentTrack].title}`,'info'); });
+window.toggleMusic=()=>{
+  if(musicPlaying){ audio.pause(); musicPlaying=false; toast('♪ Pause','info'); }
+  else { audio.play().catch(()=>toast('Erreur lecture audio','error')); musicPlaying=true; toast(`♪ ${playlist[currentTrack].title}`,'info'); }
+  updateMusicBtn();
+};
+window.nextTrack=()=>{
+  currentTrack=(currentTrack+1)%playlist.length;
+  audio.src=playlist[currentTrack].src;
+  if(musicPlaying) audio.play();
+  updateMusicBtn();
+  toast(`♪ ${playlist[currentTrack].title}`,'info');
+};
 
 // CREDS
 window.copyText=id=>{ navigator.clipboard?.writeText(document.getElementById(id).textContent).then(()=>toast('Copié !','success')); };
