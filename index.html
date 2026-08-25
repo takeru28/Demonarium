@@ -838,7 +838,7 @@
 <canvas id="bg-canvas"></canvas>
 
 <!-- SPLASH -->
-<div id="splash" onclick="document.getElementById('splash').classList.add('hide');document.getElementById('app').style.display='flex';setTimeout(()=>document.getElementById('splash').style.display='none',1100);" style="cursor:pointer">
+<div id="splash">
   <div class="splash-bg-lines"></div>
   <div class="splash-top">
     <div class="splash-sword">⚔</div>
@@ -876,8 +876,7 @@
       <button class="btn btn-sm btn-red" id="btn-logout" style="display:none" onclick="logout()">Déconnexion</button>
       <div class="music-row">
         <span>♪</span>
-        <button id="btn-music" onclick="toggleMusic()" title="Play/Pause">▶</button>
-        <span id="music-title" style="font-size:0.6rem;color:#4a5080;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Afternoon of Konoha</span>
+        <button id="btn-music" onclick="toggleMusic()" title="Musique">▶</button>
         <button onclick="nextTrack()" title="Suivant">⏭</button>
       </div>
     </div>
@@ -1377,7 +1376,11 @@ window.addEventListener('DOMContentLoaded', () => {
   updateUI(); renderCodex(); renderRules();
 });
 
-
+document.getElementById('splash').addEventListener('click', () => {
+  document.getElementById('splash').classList.add('hide');
+  document.getElementById('app').style.display='flex';
+  setTimeout(()=>document.getElementById('splash').remove(), 1100);
+});
 
 const VIEWS = {
   dashboard:['🏛','Archives des Pourfendeurs'],
@@ -1976,35 +1979,8 @@ window.toast=(msg,type='info')=>{
 
 // MUSIC
 let musicPlaying=false;
-const playlist=[
-  {src:'music1.mp4', title:'Afternoon of Konoha'},
-  {src:'music2.mp4', title:'Sengunba'}
-];
-let currentTrack=0;
-let musicPlaying=false;
-let audio=null;
-try {
-  audio=new Audio();
-  audio.src=playlist[0].src;
-  audio.loop=false;
-  audio.volume=0.4;
-  audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%playlist.length; audio.src=playlist[currentTrack].src; audio.play(); updateMusicBtn(); toast(`♪ ${playlist[currentTrack].title}`,'info'); });
-} catch(e){ console.warn('Audio non disponible',e); }
-function updateMusicBtn(){ const b=document.getElementById('btn-music'); const t=document.getElementById('music-title'); if(b) b.textContent=musicPlaying?'⏸':'▶'; if(t) t.textContent=playlist[currentTrack].title; }
-window.toggleMusic=()=>{
-  if(!audio){ toast('Lecteur audio indisponible','error'); return; }
-  if(musicPlaying){ audio.pause(); musicPlaying=false; toast('♪ Pause','info'); }
-  else { audio.play().catch(e=>toast('Erreur lecture audio','error')); musicPlaying=true; toast(`♪ ${playlist[currentTrack].title}`,'info'); }
-  updateMusicBtn();
-};
-window.nextTrack=()=>{
-  if(!audio) return;
-  currentTrack=(currentTrack+1)%playlist.length;
-  audio.src=playlist[currentTrack].src;
-  if(musicPlaying) audio.play();
-  updateMusicBtn();
-  toast(`♪ ${playlist[currentTrack].title}`,'info');
-};
+window.toggleMusic=()=>{ musicPlaying=!musicPlaying; document.getElementById('btn-music').textContent=musicPlaying?'⏸':'▶'; toast(musicPlaying?'♪ Musique activée':'♪ Pause','info'); };
+window.nextTrack=()=>toast('♪ Piste suivante','info');
 
 // CREDS
 window.copyText=id=>{ navigator.clipboard?.writeText(document.getElementById(id).textContent).then(()=>toast('Copié !','success')); };
