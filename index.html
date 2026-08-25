@@ -838,7 +838,7 @@
 <canvas id="bg-canvas"></canvas>
 
 <!-- SPLASH -->
-<div id="splash">
+<div id="splash" onclick="document.getElementById('splash').classList.add('hide');document.getElementById('app').style.display='flex';setTimeout(()=>document.getElementById('splash').style.display='none',1100);" style="cursor:pointer">
   <div class="splash-bg-lines"></div>
   <div class="splash-top">
     <div class="splash-sword">⚔</div>
@@ -1377,14 +1377,7 @@ window.addEventListener('DOMContentLoaded', () => {
   updateUI(); renderCodex(); renderRules();
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('splash');
-  if(splash) splash.addEventListener('click', () => {
-    splash.classList.add('hide');
-    document.getElementById('app').style.display='flex';
-    setTimeout(()=>splash.remove(), 1100);
-  });
-});
+
 
 const VIEWS = {
   dashboard:['🏛','Archives des Pourfendeurs'],
