@@ -1986,18 +1986,23 @@ const playlist=[
 ];
 let currentTrack=0;
 let musicPlaying=false;
-const audio=new Audio();
-audio.src=playlist[0].src;
-audio.loop=false;
-audio.volume=0.4;
-function updateMusicBtn(){ document.getElementById('btn-music').textContent=musicPlaying?'⏸':'▶'; document.getElementById('music-title').textContent=playlist[currentTrack].title; }
-audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%playlist.length; audio.src=playlist[currentTrack].src; audio.play(); updateMusicBtn(); toast(`♪ ${playlist[currentTrack].title}`,'info'); });
+let audio=null;
+try {
+  audio=new Audio();
+  audio.src=playlist[0].src;
+  audio.loop=false;
+  audio.volume=0.4;
+  audio.addEventListener('ended',()=>{ currentTrack=(currentTrack+1)%playlist.length; audio.src=playlist[currentTrack].src; audio.play(); updateMusicBtn(); toast(`♪ ${playlist[currentTrack].title}`,'info'); });
+} catch(e){ console.warn('Audio non disponible',e); }
+function updateMusicBtn(){ const b=document.getElementById('btn-music'); const t=document.getElementById('music-title'); if(b) b.textContent=musicPlaying?'⏸':'▶'; if(t) t.textContent=playlist[currentTrack].title; }
 window.toggleMusic=()=>{
+  if(!audio){ toast('Lecteur audio indisponible','error'); return; }
   if(musicPlaying){ audio.pause(); musicPlaying=false; toast('♪ Pause','info'); }
-  else { audio.play().catch(()=>toast('Erreur lecture audio','error')); musicPlaying=true; toast(`♪ ${playlist[currentTrack].title}`,'info'); }
+  else { audio.play().catch(e=>toast('Erreur lecture audio','error')); musicPlaying=true; toast(`♪ ${playlist[currentTrack].title}`,'info'); }
   updateMusicBtn();
 };
 window.nextTrack=()=>{
+  if(!audio) return;
   currentTrack=(currentTrack+1)%playlist.length;
   audio.src=playlist[currentTrack].src;
   if(musicPlaying) audio.play();
