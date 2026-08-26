@@ -60,7 +60,8 @@
   @keyframes lineDrift { 0%,100%{opacity:0.3}50%{opacity:1} }
 
   .splash-top { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
-  .splash-sword { font-size: 2.5rem; filter: drop-shadow(0 0 20px rgba(90,138,220,0.8)); animation: swordGlow 2.5s ease-in-out infinite; }
+  .splash-sword { animation: swordGlow 2.5s ease-in-out infinite; }
+  .splash-sword img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 20px rgba(90,138,220,0.8)); }
   @keyframes swordGlow { 0%,100%{filter:drop-shadow(0 0 10px rgba(90,138,220,0.5))}50%{filter:drop-shadow(0 0 30px rgba(90,138,220,1))} }
 
   .splash-title {
@@ -842,7 +843,7 @@
 <div id="splash">
   <div class="splash-bg-lines"></div>
   <div class="splash-top">
-    <div class="splash-sword">⚔</div>
+    <div class="splash-sword"><img src="logo.png" alt="Demonarium"></div>
   </div>
   <div class="splash-title">DEMONARIUM</div>
   <div class="splash-sub">Archives des Pourfendeurs de Démons</div>
